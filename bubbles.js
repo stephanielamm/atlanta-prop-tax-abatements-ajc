@@ -1,6 +1,6 @@
 (function() {
-var width = 500,
-  height = 500;
+var width = 700,
+  height = 700;
 
 var svg = d3.select("#chart")
   .append("svg")
@@ -9,7 +9,7 @@ var svg = d3.select("#chart")
   .append("g")
   .attr("transform", "translate(0,0)")
 
-var radiusScale = d3.scaleSqrt().domain([1, 40000]).range([10,80])
+var radiusScale = d3.scaleSqrt().domain([900, 3000000]).range([10,50])
 
 var simulation = d3.forceSimulation()
   .force("x", d3.forceX(width / 2).strength(0.05))
