@@ -1,6 +1,6 @@
-id,Property,Address,Jurisdiction,Full assessed/taxable value,Taxes owed,Taxes abated,Percent taxes abated
-Campanile Plaza,Campanile Plaza,1155 JUNIPER ST NE,Atlanta,$3952700,$45819,$30546,40%
-Harris Tower,Harris Tower,233 PEACHTREE ST NE,Atlanta,$15800000,$274725,$30525,10%
-Mansion on Peachtree,Mansion on Peachtree,3376 PEACHTREE RD NE,Atlanta,$3157774,$46127,$8566,16%
-Hsu's Gourmet Chinese Restaurant,Hsu's Gourmet Chinese Restaurant,192 PEACHTREE CENTER AVE NE,Atlanta,$4150000,$72171,$8019,10%
-Mathes Family Riverside,Mathes Family Riverside,8225 TROON CIR,Six Flags Special Services District,$2476640,$31949,$7987,20%
+id,property,address,jurisdiction,assessment,owed,abated,percent
+Campanile Plaza,Campanile Plaza,1155 JUNIPER ST NE,Atlanta,3952700,45819,30546,40
+Harris Tower,Harris Tower,233 PEACHTREE ST NE,Atlanta,15800000,274725,30525,10
+Mansion on Peachtree,Mansion on Peachtree,3376 PEACHTREE RD NE,Atlanta,3157774,46127,8566,16
+Hsu's Gourmet Chinese Restaurant,Hsu's Gourmet Chinese Restaurant,192 PEACHTREE CENTER AVE NE,Atlanta,4150000,72171,8019,10
+Mathes Family Riverside,Mathes Family Riverside,8225 TROON CIR,Six Flags Special Services District,2476640,31949,7987,20
