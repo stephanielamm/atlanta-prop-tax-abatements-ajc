@@ -9,7 +9,7 @@
 function bubbleChart() {
   // Constants for sizing
   var width = 940;
-  var height = 600;
+  var height = 700;
 
   // tooltip for mouseover functionality
   var tooltip = floatingTooltip('tooltip', 240);
@@ -278,7 +278,10 @@ function bubbleChart() {
     var content = '<span class="name">Property: </span><span class="value">' +
                   d.property +
                   '</span><br/>' +
-                  '<span class="name">Taxes Owed: </span><span class="value">' +
+                  '<span class="name">Assessed Value: </span><span class="value">$' +
+                  addCommas(d.assessed_value) +
+                  '</span><br/>' +
+                  '<span class="name">Taxes Owed: </span><span class="value">$' +
                   addCommas(d.taxes_owed) +
                   '</span><br/>' +
                   '<span class="name">Taxes Abated: </span><span class="value">$' +
