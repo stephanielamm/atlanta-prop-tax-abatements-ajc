@@ -9,13 +9,16 @@ var svg = d3.select("#chart")
   .append("g")
   .attr("transform", "translate(0,0)")
 
+
+
+
 var radiusScale = d3.scaleSqrt().domain([900, 3000000]).range([10,50])
 
 var forceXSeparate = d3.forceX(function(d){
   if(d.jurisdiction === 'Atlanta') {
-    return 250
+    return 210
   } else {
-    return 700
+    return 670
   }
 }).strength(0.05)
 
@@ -34,6 +37,7 @@ d3.queue()
   .defer(d3.csv, "taxes.csv")
   .await(ready)
 
+
 function ready (error, datapoints) {
 
   var circles = svg.selectAll(".company")
@@ -45,10 +49,11 @@ function ready (error, datapoints) {
     })
     .attr("fill", "lightblue")
 
+
   d3.select("#jurisdiction").on('click', function(){
     simulation
     .force("x", forceXSeparate)
-    .alphaTarget(0.29)
+    .alphaTarget(0.25)
     .restart()
   })
 
