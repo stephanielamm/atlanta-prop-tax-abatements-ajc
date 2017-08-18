@@ -110,10 +110,12 @@ function bubbleChart() {
       return {
         id: d.id,
         radius: radiusScale(+d.taxes_abated),
-        abated: +d.taxes_abated,
         property: d.property,
-        percent: d.percent_abated,
         jurisdiction: d.jurisdiction,
+        assessed_value: +d.assessed_value,
+        taxes_owed: +d.taxes_owed,
+        taxes_abated: +d.taxes_abated,
+        percent_abated: +d.percent_abated,
         x: Math.random() * 900,
         y: Math.random() * 800
       };
