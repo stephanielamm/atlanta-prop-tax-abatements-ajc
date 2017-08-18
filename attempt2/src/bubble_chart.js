@@ -20,26 +20,24 @@ function bubbleChart() {
 
    var jurisdictionCenters = {
       Alpharetta: { x: width / 6, y: height / 4 } //,
-    //  Atlanta: { x: width / 2, y: height / 4 },
-    //  Brookhaven: { x: 2 * width / 3, y: height / 4 },
-  //    Chamblee: { x: width / , y: height /  }
-      //  College Park:
+      //  Atlanta: { x: width / 2, y: height / 4 },
+      //  Brookhaven: { x: 2 * width / 3, y: height / 4 },
+      //  Chamblee: { x: width / , y: height /  }
+  // row 2
+      //   'College Park': width / 6
       //  Doraville:
       //  Dunwoody:
       //  East Point:
+  // row 3
       //  Fairburn:
-      //  Johns Creek:
+      //  'Johns Creek':
       //  Marietta:
       //  Norcross:
-      //  Sandy Springs:
-      //  South Fulton:
-      //  Stonecrest:
-      //  Tucker:
-      //  Cumberland Special District:
-      //  Town Center:
-      //  Union City:
-      // Various:
-
+  // row 4
+      //  'Sandy Springs':
+      //  'South Fulton':
+      //  'Union City':
+      // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
    };
 
   // X locations of the jurisdiction titles.
@@ -48,23 +46,24 @@ function bubbleChart() {
      Alpharetta: width / 6,
      Atlanta: width / 3,
      Brookhaven: width / 2,
-     Chamblee: width / 1.5
+     Chamblee: width / 1.5,
 // row 2
-    //  College Park:
+  //   'College Park': width / 6
     //  Doraville:
     //  Dunwoody:
     //  East Point:
 // row 3
     //  Fairburn:
-    //  Johns Creek:
+    //  'Johns Creek':
     //  Marietta:
     //  Norcross:
-// row 4    
-    //  Sandy Springs:
-    //  South Fulton:
-    //  Union City:
+// row 4
+    //  'Sandy Springs':
+    //  'South Fulton':
+    //  'Union City':
     // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
   };
+
 
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
