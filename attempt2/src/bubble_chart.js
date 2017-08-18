@@ -18,18 +18,18 @@ function bubbleChart() {
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
 
-  // var jurisdictionCenters = {
-  //  Alpharetta: { x: width / 3, y: height / 2 },
-  //  Atlanta: { x: width / 2, y: height / 2 },
-  //  Brookhaven: { x: 2 * width / 3, y: height / 2 }
-  // };
+   var jurisdictionCenters = {
+      Alpharetta: { x: width / 3, y: height / 2 } //,
+//    Atlanta: { x: width / 2, y: height / 2 },
+//    Brookhaven: { x: 2 * width / 3, y: height / 2 }
+   };
 
-  // X locations of the year titles.
-  // var jurisdictionTitleX = {
-  //  Alpharetta: 160,
-  //  Atlanta: width / 2,
+  // X locations of the jurisdiction titles.
+   var jurisdictionTitleX = {
+     Alpharetta: 160 //,
+//    Atlanta: width / 2,
 //    Brookhaven: width - 160
-//  };
+  };
 
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
@@ -200,22 +200,22 @@ function bubbleChart() {
   }
 
   /*
-   * Provides a x value for each node to be used with the split by year
+   * Provides a x value for each node to be used with the split by jurisdiction
    * x force.
    */
-  function nodeYearPos(d) {
-    return yearCenters[d.year].x;
+  function nodeJurisdictionPos(d) {
+    return jurisdictionCenters[d.jurisdiction].x;
   }
 
 
   /*
    * Sets visualization in "single group mode".
-   * The year labels are hidden and the force layout
+   * The jurisdiction labels are hidden and the force layout
    * tick function is set to move all nodes to the
    * center of the visualization.
    */
   function groupBubbles() {
-    hideYearTitles();
+    hideJurisdictionTitles();
 
     // @v4 Reset the 'x' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
@@ -226,41 +226,41 @@ function bubbleChart() {
 
 
   /*
-   * Sets visualization in "split by year mode".
-   * The year labels are shown and the force layout
+   * Sets visualization in "split by jurisdiction mode".
+   * The jurisdiction labels are shown and the force layout
    * tick function is set to move nodes to the
-   * yearCenter of their data's year.
+   * jurisdictionCenter of their data's jurisdiction.
    */
   function splitBubbles() {
-    showYearTitles();
+    showJurisdictionTitles();
 
-    // @v4 Reset the 'x' force to draw the bubbles to their year centers
-    simulation.force('x', d3.forceX().strength(forceStrength).x(nodeYearPos));
+    // @v4 Reset the 'x' force to draw the bubbles to their jurisdiction centers
+    simulation.force('x', d3.forceX().strength(forceStrength).x(nodeJurisdictionPos));
 
     // @v4 We can reset the alpha value and restart the simulation
     simulation.alpha(1).restart();
   }
 
   /*
-   * Hides Year title displays.
+   * Hides jurisdiction title displays.
    */
-  function hideYearTitles() {
-    svg.selectAll('.year').remove();
+  function hideJurisdictionTitles() {
+    svg.selectAll('.jurisdiction').remove();
   }
 
   /*
-   * Shows Year title displays.
+   * Shows jurisdiction title displays.
    */
-  function showYearTitles() {
+  function showJurisdictionTitles() {
     // Another way to do this would be to create
-    // the year texts once and then just hide them.
-    var yearsData = d3.keys(yearsTitleX);
-    var years = svg.selectAll('.year')
-      .data(yearsData);
+    // the jurisdiction texts once and then just hide them.
+    var jurisdictionData = d3.keys(jurisdictionTitleX);
+    var jurisdiction = svg.selectAll('.jurisdiction')
+      .data(jurisdictionData);
 
-    years.enter().append('text')
-      .attr('class', 'year')
-      .attr('x', function (d) { return yearsTitleX[d]; })
+    jurisdiction.enter().append('text')
+      .attr('class', 'jurisdiction')
+      .attr('x', function (d) { return jurisdictionTitleX[d]; })
       .attr('y', 40)
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
@@ -311,12 +311,12 @@ function bubbleChart() {
   /*
    * Externally accessible function (this is attached to the
    * returned chart function). Allows the visualization to toggle
-   * between "single group" and "split by year" modes.
+   * between "single group" and "split by jurisdiction" modes.
    *
-   * displayName is expected to be a string and either 'year' or 'all'.
+   * displayName is expected to be a string and either 'jurisdiction' or 'all'.
    */
   chart.toggleDisplay = function (displayName) {
-    if (displayName === 'year') {
+    if (displayName === 'jurisdiction') {
       splitBubbles();
     } else {
       groupBubbles();
