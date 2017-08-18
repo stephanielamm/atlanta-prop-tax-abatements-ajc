@@ -19,7 +19,17 @@ function bubbleChart() {
   var center = { x: width / 2, y: height / 2 };
 
    var jurisdictionCenters = {
-      Alpharetta: { x: width / 6, y: height / 4 } //,
+    // what if i made an if else function here??? -SL
+    // function () {
+    //   if d.jurisdiction === 'Atlanta'
+    //   return { x: width / 3, y: height / 2 }
+    //   else {
+    //  } 
+      Atlanta:  { x: width / 3, y: height / 2 }
+      // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
+      // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
+      //function instead, which you see above. -SL
+      // Alpharetta: { x: width / 6, y: height / 4 } //,
       //  Atlanta: { x: width / 2, y: height / 4 },
       //  Brookhaven: { x: 2 * width / 3, y: height / 4 },
       //  Chamblee: { x: width / , y: height /  }
@@ -42,11 +52,15 @@ function bubbleChart() {
 
   // X locations of the jurisdiction titles.
    var jurisdictionTitleX = {
+     Atlanta: 160
+     // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
+     // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
+     //function instead, which you can see above. -SL
 // row 1
-     Alpharetta: width / 6,
-     Atlanta: width / 3,
-     Brookhaven: width / 2,
-     Chamblee: width / 1.5,
+//     Alpharetta: width / 6,
+//     Atlanta: width / 3,
+//     Brookhaven: width / 2,
+//     Chamblee: width / 1.5,
 // row 2
   //   'College Park': width / 6
     //  Doraville:
@@ -111,6 +125,7 @@ function bubbleChart() {
       .range(['#3EA0E8'])
   //  .domain(['low', 'medium', 'high'])
   //  .range(['#d84b2a', '#beccae', '#7aa25c']);
+  // this will be filterd by percent. For now it's all one color. -SL
 
 
   /*
