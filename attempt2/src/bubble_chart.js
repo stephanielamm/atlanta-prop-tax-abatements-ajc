@@ -24,7 +24,7 @@ function bubbleChart() {
     //   if d.jurisdiction === 'Atlanta'
     //   return { x: width / 3, y: height / 2 }
     //   else {
-    //  } 
+    //  }
       Atlanta:  { x: width / 3, y: height / 2 }
       // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
       // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
@@ -122,11 +122,8 @@ function bubbleChart() {
   // Nice looking colors - no reason to buck the trend
   // @v4 scales now have a flattened naming scheme
   var fillColor = d3.scaleOrdinal()
-      .range(['#3EA0E8'])
-  //  .domain(['low', 'medium', 'high'])
-  //  .range(['#d84b2a', '#beccae', '#7aa25c']);
-  // this will be filterd by percent. For now it's all one color. -SL
-
+    .domain(['low', 'medium', 'high'])
+    .range(['#548FFF', '#2E4F8C', '#122036']);
 
   /*
    * This data manipulation function takes the raw data from
@@ -165,6 +162,7 @@ function bubbleChart() {
         taxes_owed: +d.taxes_owed,
         taxes_abated: +d.taxes_abated,
         percent_abated: +d.percent_abated,
+        group: d.group,
         x: Math.random() * 900,
         y: Math.random() * 800
       };
