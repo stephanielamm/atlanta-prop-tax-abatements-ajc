@@ -194,8 +194,8 @@ var yearsTitleX = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.4)
-      .range([5, 70])
+      .exponent(0.7)
+      .range([8, 80])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
