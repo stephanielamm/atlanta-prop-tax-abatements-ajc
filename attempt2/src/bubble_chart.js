@@ -82,8 +82,7 @@ function bubbleChart() {
 
 
 var yearCenters = {
-  Alpharetta: { x: width / 3, y: height / 3 },
-  Atlanta: { x: width / 2, y: height / 3 },
+  Atlanta: { x: width / 3, y: height / 3 },
   Other: { x: 2 * width / 3, y: height / 3 }
   //
   // 'East Point': { x: width / 3, y: height / 2 },
@@ -97,8 +96,7 @@ var yearCenters = {
 
 // X locations of the year titles.
 var yearsTitleX = {
-  Alpharetta: 160,
-  Atlanta: width / 2,
+  Atlanta: 160,
   Other: width - 160
   //
   // 'East Point': 160,
