@@ -6,6 +6,7 @@
  * https://bost.ocks.org/mike/chart/
  *
  */
+
 function bubbleChart() {
   // Constants for sizing
   var width = 940;
@@ -18,14 +19,14 @@ function bubbleChart() {
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
 
-   var jurisdictionCenters = {
+  // var jurisdictionCenters = {
     // what if i made an if else function here??? -SL
     // function () {
     //   if d.jurisdiction === 'Atlanta'
     //   return { x: width / 3, y: height / 2 }
     //   else {
     //  }
-      Atlanta:  { x: width / 3, y: height / 2 }
+  //    '2':  { x: width / 3, y: height / 2 }
       // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
       // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
       //function instead, which you see above. -SL
@@ -48,11 +49,11 @@ function bubbleChart() {
       //  'South Fulton':
       //  'Union City':
       // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
-   };
+//   };
 
   // X locations of the jurisdiction titles.
-   var jurisdictionTitleX = {
-     Atlanta: 160
+  // var jurisdictionTitleX = {
+  //   'Atlanta': 160
      // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
      // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
      //function instead, which you can see above. -SL
@@ -76,8 +77,22 @@ function bubbleChart() {
     //  'South Fulton':
     //  'Union City':
     // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
-  };
+//  };
 
+
+
+var yearCenters = {
+  2008: { x: width / 3, y: height / 2 },
+  2009: { x: width / 2, y: height / 2 },
+  2010: { x: 2 * width / 3, y: height / 2 }
+};
+
+// X locations of the year titles.
+var yearsTitleX = {
+  2008: 160,
+  2009: width / 2,
+  2010: width - 160
+};
 
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
@@ -125,6 +140,13 @@ function bubbleChart() {
     .domain(['low', 'medium', 'high'])
     .range(['#548FFF', '#2E4F8C', '#122036']);
 
+  // - Create a variable, at a high-enough scope that the tick function can access it
+  // called something like 'currentMunicipality' and set it to 'none'
+  // var currentMunicipality = none;
+  // - In javascript, listen for changes to that dropdown,
+  // and when they occur, change the 'currentMunicipality' variable to equal that new value
+
+
   /*
    * This data manipulation function takes the raw data from
    * the CSV file and converts it into an array of node objects.
@@ -163,6 +185,7 @@ function bubbleChart() {
         taxes_abated: +d.taxes_abated,
         percent_abated: +d.percent_abated,
         group: d.group,
+        year: d.start_year,
         x: Math.random() * 900,
         y: Math.random() * 800
       };
@@ -212,7 +235,7 @@ function bubbleChart() {
       .attr('r', 0)
       .attr('fill', function (d) { return fillColor(d.group); })
       .attr('stroke', function (d) { return d3.rgb(fillColor(d.group)).darker(); })
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 1)
       .on('mouseover', showDetail)
       .on('mouseout', hideDetail);
 
@@ -222,7 +245,7 @@ function bubbleChart() {
     // Fancy transition to make bubbles appear, ending with the
     // correct radius
     bubbles.transition()
-      .duration(2000)
+      .duration(1000)
       .attr('r', function (d) { return d.radius; });
 
     // Set the simulation's nodes to our newly created nodes array.
@@ -241,18 +264,31 @@ function bubbleChart() {
    * These x and y values are modified by the force simulation.
    */
   function ticked() {
+// from https://bl.ocks.org/mbostock/1021841 with rec from Julia
+  //  var k = 6 * e.alpha;
+  //  nodes.forEach(function(o,i) {
+  //   o.y += i & 1 ? k : -k;
+  //   o.x += i & 2 ? k : -k;
+//   });
+  // end trial code
     bubbles
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
+
+    // - In your tick function, create that k value and have an if/else statement.
+    // If 'currentMunicipality' is none, then render exactly as you have.
+    // Otherwise, check each nodes' municipality. If it's the correct one, set it's o.x
+    // (like in that d3 example linked above)  to be += K, otherwise, -= K
   }
 
   /*
    * Provides a x value for each node to be used with the split by jurisdiction
    * x force.
    */
-  function nodeJurisdictionPos(d) {
-    return jurisdictionCenters[d.jurisdiction].x;
-  }
+   function nodeYearPos(d) {
+      return yearCenters[d.year].x;
+    }
+
 
 
   /*
@@ -261,8 +297,8 @@ function bubbleChart() {
    * tick function is set to move all nodes to the
    * center of the visualization.
    */
-  function groupBubbles() {
-    hideJurisdictionTitles();
+   function groupBubbles() {
+     hideYearTitles();
 
     // @v4 Reset the 'x' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
@@ -278,40 +314,40 @@ function bubbleChart() {
    * tick function is set to move nodes to the
    * jurisdictionCenter of their data's jurisdiction.
    */
-  function splitBubbles() {
-    showJurisdictionTitles();
+   function splitBubbles() {
+     showYearTitles();
 
-    // @v4 Reset the 'x' force to draw the bubbles to their jurisdiction centers
-    simulation.force('x', d3.forceX().strength(forceStrength).x(nodeJurisdictionPos));
+     // @v4 Reset the 'x' force to draw the bubbles to their year centers
+     simulation.force('x', d3.forceX().strength(forceStrength).x(nodeYearPos));
 
-    // @v4 We can reset the alpha value and restart the simulation
-    simulation.alpha(1).restart();
-  }
+     // @v4 We can reset the alpha value and restart the simulation
+     simulation.alpha(1).restart();
+   }
 
-  /*
-   * Hides jurisdiction title displays.
-   */
-  function hideJurisdictionTitles() {
-    svg.selectAll('.jurisdiction').remove();
-  }
+   /*
+    * Hides Year title displays.
+    */
+   function hideYearTitles() {
+     svg.selectAll('.year').remove();
+   }
 
-  /*
-   * Shows jurisdiction title displays.
-   */
-  function showJurisdictionTitles() {
-    // Another way to do this would be to create
-    // the jurisdiction texts once and then just hide them.
-    var jurisdictionData = d3.keys(jurisdictionTitleX);
-    var jurisdiction = svg.selectAll('.jurisdiction')
-      .data(jurisdictionData);
+   /*
+    * Shows Year title displays.
+    */
+   function showYearTitles() {
+     // Another way to do this would be to create
+     // the year texts once and then just hide them.
+     var yearsData = d3.keys(yearsTitleX);
+     var years = svg.selectAll('.year')
+       .data(yearsData);
 
-    jurisdiction.enter().append('text')
-      .attr('class', 'jurisdiction')
-      .attr('x', function (d) { return jurisdictionTitleX[d]; })
-      .attr('y', 40)
-      .attr('text-anchor', 'middle')
-      .text(function (d) { return d; });
-  }
+     years.enter().append('text')
+       .attr('class', 'year')
+       .attr('x', function (d) { return yearsTitleX[d]; })
+       .attr('y', 40)
+       .attr('text-anchor', 'middle')
+       .text(function (d) { return d; });
+   }
 
 
   /*
@@ -362,13 +398,13 @@ function bubbleChart() {
    *
    * displayName is expected to be a string and either 'jurisdiction' or 'all'.
    */
-  chart.toggleDisplay = function (displayName) {
-    if (displayName === 'jurisdiction') {
-      splitBubbles();
-    } else {
-      groupBubbles();
-    }
-  };
+   chart.toggleDisplay = function (displayName) {
+     if (displayName === 'year') {
+       splitBubbles();
+     } else {
+       groupBubbles();
+     }
+   };
 
 
   // return the chart function from closure.
