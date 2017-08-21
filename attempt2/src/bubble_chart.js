@@ -82,18 +82,47 @@ function bubbleChart() {
 
 
 var yearCenters = {
-  2008: { x: width / 3, y: height / 2 },
-  2009: { x: width / 2, y: height / 2 },
-  2010: { x: 2 * width / 3, y: height / 2 }
+  Alpharetta: { x: width / 3, y: height / 3 },
+  Atlanta: { x: width / 2, y: height / 3 },
+  Other: { x: 2 * width / 3, y: height / 3 }
+  //
+  // 'East Point': { x: width / 3, y: height / 2 },
+  // 'Johns Creek': { x: width / 2, y: height / 2 },
+  // 'Sandy Springs': { x: 2 * width / 3, y: height / 2 },
+  //
+  // DeKalb: { x: width / 3, y: 2 * height },
+  // 'Union City': { x: width / 2, y: 2 * height },
+  // Other: { x: 2 * width / 3, y: 2 * height }
 };
 
 // X locations of the year titles.
 var yearsTitleX = {
-  2008: 160,
-  2009: width / 2,
-  2010: width - 160
-};
+  Alpharetta: 160,
+  Atlanta: width / 2,
+  Other: width - 160
+  //
+  // 'East Point': 160,
+  // 'Johns Creek': width/2,
+  // 'Sandy Springs': width - 160,
+  //
+  // DeKalb: 160,
+  // 'Union City': width / 2,
+  // Other: width - 160
+  };
 
+// var yearsTitleY = {
+//   Alpharetta: 160,
+//   Atlanta: height / 2,
+//   Brokhaven: height - 160,
+//
+//   'East Point': 160,
+//   'Johns Creek': height / 2,
+//   'Sandy Springs': height - 160,
+//
+//   DeKalb: 160,
+//   'Union City': height / 2,
+//   Other: height - 160
+// };
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
 
@@ -185,7 +214,7 @@ var yearsTitleX = {
         taxes_abated: +d.taxes_abated,
         percent_abated: +d.percent_abated,
         group: d.group,
-        year: d.start_year,
+        year: d.jur_buckets,
         x: Math.random() * 900,
         y: Math.random() * 800
       };
