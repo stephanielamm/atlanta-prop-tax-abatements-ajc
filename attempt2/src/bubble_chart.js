@@ -7,6 +7,24 @@
  *
  */
 
+
+ var lastIndex = "";
+   function listQ(){
+   var e = document.getElementById("drop-down");
+   if(e.selectedIndex > 0){
+     if(e.selectedIndex != lastIndex) {
+       if("4" === e.options[e.selectedIndex].value)
+         alert("you selected" +  " " + e.options[e.selectedIndex].id + "!");
+       lastIndex = e.selectedIndex;
+     }
+     else {
+       lastIndex = ""
+     }
+   }
+ }
+ document.getElementById("drop-down").addEventListener("click",listQ);
+
+
 function bubbleChart() {
   // Constants for sizing
   var width = 940;
@@ -169,7 +187,6 @@ var yearsTitleX = {
 
   // - Create a variable, at a high-enough scope that the tick function can access it
   // called something like 'currentMunicipality' and set it to 'none'
-  // var currentMunicipality = none;
   // - In javascript, listen for changes to that dropdown,
   // and when they occur, change the 'currentMunicipality' variable to equal that new value
 
@@ -290,6 +307,8 @@ var yearsTitleX = {
    * based on the current x and y values of their bound node data.
    * These x and y values are modified by the force simulation.
    */
+  var currentMunicipality = "none";
+
   function ticked() {
 // from https://bl.ocks.org/mbostock/1021841 with rec from Julia
   //  var k = 6 * e.alpha;
@@ -298,6 +317,16 @@ var yearsTitleX = {
   //   o.x += i & 2 ? k : -k;
 //   });
   // end trial code
+//
+// var k =
+//
+// if (currentMunicipality === 'none') {
+//   o.x += i & 2 ? k : -k;
+// } else {
+//
+// }
+
+
     bubbles
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
