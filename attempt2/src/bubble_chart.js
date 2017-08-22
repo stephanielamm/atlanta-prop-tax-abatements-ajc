@@ -13,7 +13,7 @@
    var e = document.getElementById("drop-down");
    if(e.selectedIndex > 0){
      if(e.selectedIndex != lastIndex) {
-       if("4" === e.options[e.selectedIndex].value)
+       if(0 < e.options[e.selectedIndex].value)
          alert("you selected" +  " " + e.options[e.selectedIndex].id + "!");
        lastIndex = e.selectedIndex;
      }
@@ -37,108 +37,18 @@ function bubbleChart() {
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
 
-  // var jurisdictionCenters = {
-    // what if i made an if else function here??? -SL
-    // function () {
-    //   if d.jurisdiction === 'Atlanta'
-    //   return { x: width / 3, y: height / 2 }
-    //   else {
-    //  }
-  //    '2':  { x: width / 3, y: height / 2 }
-      // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
-      // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
-      //function instead, which you see above. -SL
-      // Alpharetta: { x: width / 6, y: height / 4 } //,
-      //  Atlanta: { x: width / 2, y: height / 4 },
-      //  Brookhaven: { x: 2 * width / 3, y: height / 4 },
-      //  Chamblee: { x: width / , y: height /  }
-  // row 2
-      //   'College Park': width / 6
-      //  Doraville:
-      //  Dunwoody:
-      //  East Point:
-  // row 3
-      //  Fairburn:
-      //  'Johns Creek':
-      //  Marietta:
-      //  Norcross:
-  // row 4
-      //  'Sandy Springs':
-      //  'South Fulton':
-      //  'Union City':
-      // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
-//   };
-
-  // X locations of the jurisdiction titles.
-  // var jurisdictionTitleX = {
-  //   'Atlanta': 160
-     // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
-     // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
-     //function instead, which you can see above. -SL
-// row 1
-//     Alpharetta: width / 6,
-//     Atlanta: width / 3,
-//     Brookhaven: width / 2,
-//     Chamblee: width / 1.5,
-// row 2
-  //   'College Park': width / 6
-    //  Doraville:
-    //  Dunwoody:
-    //  East Point:
-// row 3
-    //  Fairburn:
-    //  'Johns Creek':
-    //  Marietta:
-    //  Norcross:
-// row 4
-    //  'Sandy Springs':
-    //  'South Fulton':
-    //  'Union City':
-    // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
-//  };
-
-
 
 var yearCenters = {
   Atlanta: { x: width / 3, y: height / 3 },
   Other: { x: 2 * width / 3, y: height / 3 }
-  //
-  // 'East Point': { x: width / 3, y: height / 2 },
-  // 'Johns Creek': { x: width / 2, y: height / 2 },
-  // 'Sandy Springs': { x: 2 * width / 3, y: height / 2 },
-  //
-  // DeKalb: { x: width / 3, y: 2 * height },
-  // 'Union City': { x: width / 2, y: 2 * height },
-  // Other: { x: 2 * width / 3, y: 2 * height }
 };
 
 // X locations of the year titles.
 var yearsTitleX = {
   Atlanta: 160,
   Other: width - 160
-  //
-  // 'East Point': 160,
-  // 'Johns Creek': width/2,
-  // 'Sandy Springs': width - 160,
-  //
-  // DeKalb: 160,
-  // 'Union City': width / 2,
-  // Other: width - 160
   };
 
-// var yearsTitleY = {
-//   Alpharetta: 160,
-//   Atlanta: height / 2,
-//   Brokhaven: height - 160,
-//
-//   'East Point': 160,
-//   'Johns Creek': height / 2,
-//   'Sandy Springs': height - 160,
-//
-//   DeKalb: 160,
-//   'Union City': height / 2,
-//   Other: height - 160
-// };
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
 
@@ -184,12 +94,6 @@ var yearsTitleX = {
   var fillColor = d3.scaleOrdinal()
     .domain(['low', 'medium', 'high'])
     .range(['#548FFF', '#2E4F8C', '#122036']);
-
-  // - Create a variable, at a high-enough scope that the tick function can access it
-  // called something like 'currentMunicipality' and set it to 'none'
-  // - In javascript, listen for changes to that dropdown,
-  // and when they occur, change the 'currentMunicipality' variable to equal that new value
-
 
   /*
    * This data manipulation function takes the raw data from
