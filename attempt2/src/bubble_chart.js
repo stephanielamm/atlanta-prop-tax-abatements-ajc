@@ -7,6 +7,7 @@
  *
  */
 
+var currentMunicipality = "none";
 
  var lastIndex = "";
    function listQ(){
@@ -14,7 +15,12 @@
    if(e.selectedIndex > 0){
      if(e.selectedIndex != lastIndex) {
        if(0 < e.options[e.selectedIndex].value)
-         alert("you selected" +  " " + e.options[e.selectedIndex].id + "!");
+        console.log("you selected" +  " " + e.options[e.selectedIndex].id + "!");
+      //  set currentMunicipality(){
+      //    e.options[e.selectedIndex].value
+      //  };
+       currentMunicipality = e.options[e.selectedIndex].id;
+      console.log(currentMunicipality);
        lastIndex = e.selectedIndex;
      }
      else {
@@ -211,7 +217,7 @@ var yearsTitleX = {
    * based on the current x and y values of their bound node data.
    * These x and y values are modified by the force simulation.
    */
-  var currentMunicipality = "none";
+
 
   function ticked() {
 // from https://bl.ocks.org/mbostock/1021841 with rec from Julia
