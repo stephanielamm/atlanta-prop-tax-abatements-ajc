@@ -1,11 +1,20 @@
-/* bubbleChart creation function. Returns a function that will
- * instantiate a new bubble chart given a DOM element to display
- * it in and a dataset to visualize.
- *
- * address and style inspired by:
- * https://bost.ocks.org/mike/chart/
- *
- */
+/*
+* Creating my currentMunicipality variable and using a listener
+* to update it with the selected municipality.
+*/
+ /*
+ $('#dropdown option').click(function () {
+  // gives data-attr called data-notselected to every option with a value of 'other'
+  $('.dropdown option').data('notSlected', 'other');
+  // removes data-notselected from the specific option clicked
+  $(this).removeData('notselected');
+  // check if the option does NOT have a data attr of notSelected
+  if (!$("#dataTable option").attr('notSelected')) {
+    // assign the id value to currentMunicipality
+    currentMunicipality = $(this).attr('id');
+  }
+});
+*/
 
 var currentMunicipality = "none";
 
@@ -16,9 +25,6 @@ var currentMunicipality = "none";
      if(e.selectedIndex != lastIndex) {
        if(0 < e.options[e.selectedIndex].value)
         console.log("you selected" +  " " + e.options[e.selectedIndex].id + "!");
-      //  set currentMunicipality(){
-      //    e.options[e.selectedIndex].value
-      //  };
        currentMunicipality = e.options[e.selectedIndex].id;
       console.log(currentMunicipality);
        lastIndex = e.selectedIndex;
@@ -30,7 +36,14 @@ var currentMunicipality = "none";
  }
  document.getElementById("drop-down").addEventListener("click",listQ);
 
-
+ /* bubbleChart creation function. Returns a function that will
+  * instantiate a new bubble chart given a DOM element to display
+  * it in and a dataset to visualize.
+  *
+  * address and style inspired by:
+  * https://bost.ocks.org/mike/chart/
+  *
+  */
 function bubbleChart() {
   // Constants for sizing
   var width = 940;
@@ -45,13 +58,13 @@ function bubbleChart() {
 
 
 var yearCenters = {
-  Atlanta: { x: width / 3, y: height / 3 },
-  Other: { x: 2 * width / 3, y: height / 3 }
+  currentMunicipality: 160,
+  Other: width - 160
 };
 
 // X locations of the year titles.
 var yearsTitleX = {
-  Atlanta: 160,
+  Selected: 160,
   Other: width - 160
   };
 
@@ -90,12 +103,10 @@ var yearsTitleX = {
     .force('y', d3.forceY().strength(forceStrength).y(center.y))
     .force('charge', d3.forceManyBody().strength(charge))
     .on('tick', ticked);
-
   // @v4 Force starts up automatically,
   //  which we don't want as there aren't any nodes yet.
   simulation.stop();
 
-  // Nice looking colors - no reason to buck the trend
   // @v4 scales now have a flattened naming scheme
   var fillColor = d3.scaleOrdinal()
     .domain(['low', 'medium', 'high'])
@@ -220,31 +231,23 @@ var yearsTitleX = {
 
 
   function ticked() {
-// from https://bl.ocks.org/mbostock/1021841 with rec from Julia
-  //  var k = 6 * e.alpha;
-  //  nodes.forEach(function(o,i) {
-  //   o.y += i & 1 ? k : -k;
-  //   o.x += i & 2 ? k : -k;
-//   });
-  // end trial code
-//
-// var k =
-//
-// if (currentMunicipality === 'none') {
-//   o.x += i & 2 ? k : -k;
-// } else {
-//
-// }
-
-
+    // var k = //not sure what to put here.
+    // if (currentMunicipality = 'none'){
+    //   // render exactly as you have;
+    // } else if
+    // // check each nodes' municipality.
+    // // if the correct one, sort.
+    //  (myNodes.forEach(d.jurisdiction === currentMunicipality)){
+    //     o.x += k;
+    //     // set its o.x to be +=K
+    //   } else {
+    //     o.x -= k;
+    //     // set its o.x to be -=K
+    //   }
+    // }
     bubbles
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
-
-    // - In your tick function, create that k value and have an if/else statement.
-    // If 'currentMunicipality' is none, then render exactly as you have.
-    // Otherwise, check each nodes' municipality. If it's the correct one, set it's o.x
-    // (like in that d3 example linked above)  to be += K, otherwise, -= K
   }
 
   /*
@@ -268,7 +271,6 @@ var yearsTitleX = {
 
     // @v4 Reset the 'x' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
-
     // @v4 We can reset the alpha value and restart the simulation
     simulation.alpha(1).restart();
   }
@@ -398,7 +400,7 @@ function display(error, data) {
 
 /*
  * Sets up the layout buttons to allow for toggling between view modes.
- */
+//  */
 function setupButtons() {
   d3.select('#toolbar')
     .selectAll('.button')
