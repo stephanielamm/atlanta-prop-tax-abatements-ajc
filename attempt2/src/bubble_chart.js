@@ -280,6 +280,8 @@ var yearsTitleY = {
 
     // @v4 Reset the 'x' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
+    simulation.force('y', d3.forceY().strength(forceStrength).y(center.y));
+
 
     // @v4 We can reset the alpha value and restart the simulation
     simulation.alpha(1).restart();
@@ -299,7 +301,6 @@ var yearsTitleY = {
      simulation.force('x', d3.forceX().strength(forceStrength).x(nodeYearPosX));
 
      simulation.force('y', d3.forceY().strength(forceStrength).y(nodeYearPosY));
-
 
      // @v4 We can reset the alpha value and restart the simulation
      simulation.alpha(1).restart();
