@@ -10,7 +10,7 @@
 function bubbleChart() {
   // Constants for sizing
   var width = 940;
-  var height = 700;
+  var height = 800;
 
   // tooltip for mouseover functionality
   var tooltip = floatingTooltip('tooltip', 240);
@@ -19,108 +19,32 @@ function bubbleChart() {
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
 
-  // var jurisdictionCenters = {
-    // what if i made an if else function here??? -SL
-    // function () {
-    //   if d.jurisdiction === 'Atlanta'
-    //   return { x: width / 3, y: height / 2 }
-    //   else {
-    //  }
-  //    '2':  { x: width / 3, y: height / 2 }
-      // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
-      // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
-      //function instead, which you see above. -SL
-      // Alpharetta: { x: width / 6, y: height / 4 } //,
-      //  Atlanta: { x: width / 2, y: height / 4 },
-      //  Brookhaven: { x: 2 * width / 3, y: height / 4 },
-      //  Chamblee: { x: width / , y: height /  }
-  // row 2
-      //   'College Park': width / 6
-      //  Doraville:
-      //  Dunwoody:
-      //  East Point:
-  // row 3
-      //  Fairburn:
-      //  'Johns Creek':
-      //  Marietta:
-      //  Norcross:
-  // row 4
-      //  'Sandy Springs':
-      //  'South Fulton':
-      //  'Union City':
-      // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
-//   };
-
-  // X locations of the jurisdiction titles.
-  // var jurisdictionTitleX = {
-  //   'Atlanta': 160
-     // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
-     // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
-     //function instead, which you can see above. -SL
-// row 1
-//     Alpharetta: width / 6,
-//     Atlanta: width / 3,
-//     Brookhaven: width / 2,
-//     Chamblee: width / 1.5,
-// row 2
-  //   'College Park': width / 6
-    //  Doraville:
-    //  Dunwoody:
-    //  East Point:
-// row 3
-    //  Fairburn:
-    //  'Johns Creek':
-    //  Marietta:
-    //  Norcross:
-// row 4
-    //  'Sandy Springs':
-    //  'South Fulton':
-    //  'Union City':
-    // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
-//  };
-
-
 
 var yearCenters = {
-  Atlanta: { x: width / 3, y: height / 3 },
-  Other: { x: 2 * width / 3, y: height / 3 }
-  //
-  // 'East Point': { x: width / 3, y: height / 2 },
-  // 'Johns Creek': { x: width / 2, y: height / 2 },
-  // 'Sandy Springs': { x: 2 * width / 3, y: height / 2 },
-  //
-  // DeKalb: { x: width / 3, y: 2 * height },
-  // 'Union City': { x: width / 2, y: 2 * height },
-  // Other: { x: 2 * width / 3, y: 2 * height }
+  Atlanta: { x: width / 6, y: height / 3 },
+  'Union City': { x: width / 4, y: height / 3 },
+  'Sandy Springs': { x: width / 2, y: 2 * height / 3 },
+  Other: { x: 2 * width / 4, y: 2 * height / 3 }
+
 };
 
 // X locations of the year titles.
 var yearsTitleX = {
-  Atlanta: 160,
-  Other: width - 160
-  //
-  // 'East Point': 160,
-  // 'Johns Creek': width/2,
-  // 'Sandy Springs': width - 160,
-  //
-  // DeKalb: 160,
-  // 'Union City': width / 2,
-  // Other: width - 160
+  Atlanta: width / 6,
+  'Union City': width / 6 + 100,
+  'Sandy Springs': width / 2,
+  Other: width / 2 + 100
+
   };
 
-// var yearsTitleY = {
-//   Alpharetta: 160,
-//   Atlanta: height / 2,
-//   Brokhaven: height - 160,
-//
-//   'East Point': 160,
-//   'Johns Creek': height / 2,
-//   'Sandy Springs': height - 160,
-//
-//   DeKalb: 160,
-//   'Union City': height / 2,
-//   Other: height - 160
-// };
+// Y locations of the year titles.
+var yearsTitleY = {
+  Atlanta: height / 3,
+  'Union City': height / 3,
+  'Sandy Springs': 2 * height / 3,
+  Other: 2 * height / 3
+};
+
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
 
@@ -194,8 +118,8 @@ var yearsTitleX = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.5)
-      .range([2, 85])
+      .exponent(0.9)
+      .range([5, 50])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
@@ -291,31 +215,23 @@ var yearsTitleX = {
    * These x and y values are modified by the force simulation.
    */
   function ticked() {
-// from https://bl.ocks.org/mbostock/1021841 with rec from Julia
-  //  var k = 6 * e.alpha;
-  //  nodes.forEach(function(o,i) {
-  //   o.y += i & 1 ? k : -k;
-  //   o.x += i & 2 ? k : -k;
-//   });
-  // end trial code
+
     bubbles
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
-
-    // - In your tick function, create that k value and have an if/else statement.
-    // If 'currentMunicipality' is none, then render exactly as you have.
-    // Otherwise, check each nodes' municipality. If it's the correct one, set it's o.x
-    // (like in that d3 example linked above)  to be += K, otherwise, -= K
   }
 
   /*
    * Provides a x value for each node to be used with the split by jurisdiction
    * x force.
    */
-   function nodeYearPos(d) {
+   function nodeYearPosX(d) {
       return yearCenters[d.year].x;
     }
 
+    function nodeYearPosY(d) {
+       return yearCenters[d.year].y;
+     }
 
 
   /*
@@ -345,7 +261,10 @@ var yearsTitleX = {
      showYearTitles();
 
      // @v4 Reset the 'x' force to draw the bubbles to their year centers
-     simulation.force('x', d3.forceX().strength(forceStrength).x(nodeYearPos));
+     simulation.force('x', d3.forceX().strength(forceStrength).x(nodeYearPosX));
+
+     simulation.force('y', d3.forceY().strength(forceStrength).y(nodeYearPosY));
+
 
      // @v4 We can reset the alpha value and restart the simulation
      simulation.alpha(1).restart();
@@ -371,7 +290,7 @@ var yearsTitleX = {
      years.enter().append('text')
        .attr('class', 'year')
        .attr('x', function (d) { return yearsTitleX[d]; })
-       .attr('y', 40)
+       .attr('y', function (d) { return yearsTitleY[d]; })
        .attr('text-anchor', 'middle')
        .text(function (d) { return d; });
    }
