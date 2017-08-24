@@ -1,49 +1,12 @@
-/*
-* Creating my currentMunicipality variable and using a listener
-* to update it with the selected municipality.
-*/
- /*
- $('#dropdown option').click(function () {
-  // gives data-attr called data-notselected to every option with a value of 'other'
-  $('.dropdown option').data('notSlected', 'other');
-  // removes data-notselected from the specific option clicked
-  $(this).removeData('notselected');
-  // check if the option does NOT have a data attr of notSelected
-  if (!$("#dataTable option").attr('notSelected')) {
-    // assign the id value to currentMunicipality
-    currentMunicipality = $(this).attr('id');
-  }
-});
-*/
+/* bubbleChart creation function. Returns a function that will
+ * instantiate a new bubble chart given a DOM element to display
+ * it in and a dataset to visualize.
+ *
+ * address and style inspired by:
+ * https://bost.ocks.org/mike/chart/
+ *
+ */
 
-var currentMunicipality = "none";
-
- var lastIndex = "";
-   function listQ(){
-   var e = document.getElementById("drop-down");
-   if(e.selectedIndex > 0){
-     if(e.selectedIndex != lastIndex) {
-       if(0 < e.options[e.selectedIndex].value)
-        console.log("you selected" +  " " + e.options[e.selectedIndex].id + "!");
-       currentMunicipality = e.options[e.selectedIndex].id;
-      console.log(currentMunicipality);
-       lastIndex = e.selectedIndex;
-     }
-     else {
-       lastIndex = ""
-     }
-   }
- }
- document.getElementById("drop-down").addEventListener("click",listQ);
-
- /* bubbleChart creation function. Returns a function that will
-  * instantiate a new bubble chart given a DOM element to display
-  * it in and a dataset to visualize.
-  *
-  * address and style inspired by:
-  * https://bost.ocks.org/mike/chart/
-  *
-  */
 function bubbleChart() {
   // Constants for sizing
   var width = 940;
@@ -56,18 +19,108 @@ function bubbleChart() {
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
 
+  // var jurisdictionCenters = {
+    // what if i made an if else function here??? -SL
+    // function () {
+    //   if d.jurisdiction === 'Atlanta'
+    //   return { x: width / 3, y: height / 2 }
+    //   else {
+    //  }
+  //    '2':  { x: width / 3, y: height / 2 }
+      // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
+      // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
+      //function instead, which you see above. -SL
+      // Alpharetta: { x: width / 6, y: height / 4 } //,
+      //  Atlanta: { x: width / 2, y: height / 4 },
+      //  Brookhaven: { x: 2 * width / 3, y: height / 4 },
+      //  Chamblee: { x: width / , y: height /  }
+  // row 2
+      //   'College Park': width / 6
+      //  Doraville:
+      //  Dunwoody:
+      //  East Point:
+  // row 3
+      //  Fairburn:
+      //  'Johns Creek':
+      //  Marietta:
+      //  Norcross:
+  // row 4
+      //  'Sandy Springs':
+      //  'South Fulton':
+      //  'Union City':
+      // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
+//   };
+
+  // X locations of the jurisdiction titles.
+  // var jurisdictionTitleX = {
+  //   'Atlanta': 160
+     // testing out a grid format here so when the user clicks 'separate by jurisdiction,' all the bubbles
+     // will travel to the correct area. This might be too complicated. So I'm testing out just a 'selected'
+     //function instead, which you can see above. -SL
+// row 1
+//     Alpharetta: width / 6,
+//     Atlanta: width / 3,
+//     Brookhaven: width / 2,
+//     Chamblee: width / 1.5,
+// row 2
+  //   'College Park': width / 6
+    //  Doraville:
+    //  Dunwoody:
+    //  East Point:
+// row 3
+    //  Fairburn:
+    //  'Johns Creek':
+    //  Marietta:
+    //  Norcross:
+// row 4
+    //  'Sandy Springs':
+    //  'South Fulton':
+    //  'Union City':
+    // Other (six flags, stonecrest, tucker, ucobb, udekalb, ugwin, town center, cumberland):
+//  };
+
+
 
 var yearCenters = {
-  currentMunicipality: 160,
-  Other: width - 160
+  Atlanta: { x: width / 3, y: height / 3 },
+  Other: { x: 2 * width / 3, y: height / 3 }
+  //
+  // 'East Point': { x: width / 3, y: height / 2 },
+  // 'Johns Creek': { x: width / 2, y: height / 2 },
+  // 'Sandy Springs': { x: 2 * width / 3, y: height / 2 },
+  //
+  // DeKalb: { x: width / 3, y: 2 * height },
+  // 'Union City': { x: width / 2, y: 2 * height },
+  // Other: { x: 2 * width / 3, y: 2 * height }
 };
 
 // X locations of the year titles.
 var yearsTitleX = {
-  Selected: 160,
+  Atlanta: 160,
   Other: width - 160
+  //
+  // 'East Point': 160,
+  // 'Johns Creek': width/2,
+  // 'Sandy Springs': width - 160,
+  //
+  // DeKalb: 160,
+  // 'Union City': width / 2,
+  // Other: width - 160
   };
 
+// var yearsTitleY = {
+//   Alpharetta: 160,
+//   Atlanta: height / 2,
+//   Brokhaven: height - 160,
+//
+//   'East Point': 160,
+//   'Johns Creek': height / 2,
+//   'Sandy Springs': height - 160,
+//
+//   DeKalb: 160,
+//   'Union City': height / 2,
+//   Other: height - 160
+// };
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
 
@@ -103,14 +156,23 @@ var yearsTitleX = {
     .force('y', d3.forceY().strength(forceStrength).y(center.y))
     .force('charge', d3.forceManyBody().strength(charge))
     .on('tick', ticked);
+
   // @v4 Force starts up automatically,
   //  which we don't want as there aren't any nodes yet.
   simulation.stop();
 
+  // Nice looking colors - no reason to buck the trend
   // @v4 scales now have a flattened naming scheme
   var fillColor = d3.scaleOrdinal()
     .domain(['low', 'medium', 'high'])
-    .range(['#548FFF', '#2E4F8C', '#122036']);
+    .range(['#ED8451', '#CC3301', '#7A1E00']);
+
+  // - Create a variable, at a high-enough scope that the tick function can access it
+  // called something like 'currentMunicipality' and set it to 'none'
+  // var currentMunicipality = none;
+  // - In javascript, listen for changes to that dropdown,
+  // and when they occur, change the 'currentMunicipality' variable to equal that new value
+
 
   /*
    * This data manipulation function takes the raw data from
@@ -132,8 +194,8 @@ var yearsTitleX = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.7)
-      .range([8, 80])
+      .exponent(0.5)
+      .range([2, 85])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
@@ -228,26 +290,22 @@ var yearsTitleX = {
    * based on the current x and y values of their bound node data.
    * These x and y values are modified by the force simulation.
    */
-
-
   function ticked() {
-    // var k = //not sure what to put here.
-    // if (currentMunicipality = 'none'){
-    //   // render exactly as you have;
-    // } else if
-    // // check each nodes' municipality.
-    // // if the correct one, sort.
-    //  (myNodes.forEach(d.jurisdiction === currentMunicipality)){
-    //     o.x += k;
-    //     // set its o.x to be +=K
-    //   } else {
-    //     o.x -= k;
-    //     // set its o.x to be -=K
-    //   }
-    // }
+// from https://bl.ocks.org/mbostock/1021841 with rec from Julia
+  //  var k = 6 * e.alpha;
+  //  nodes.forEach(function(o,i) {
+  //   o.y += i & 1 ? k : -k;
+  //   o.x += i & 2 ? k : -k;
+//   });
+  // end trial code
     bubbles
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
+
+    // - In your tick function, create that k value and have an if/else statement.
+    // If 'currentMunicipality' is none, then render exactly as you have.
+    // Otherwise, check each nodes' municipality. If it's the correct one, set it's o.x
+    // (like in that d3 example linked above)  to be += K, otherwise, -= K
   }
 
   /*
@@ -271,6 +329,7 @@ var yearsTitleX = {
 
     // @v4 Reset the 'x' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
+
     // @v4 We can reset the alpha value and restart the simulation
     simulation.alpha(1).restart();
   }
@@ -400,7 +459,7 @@ function display(error, data) {
 
 /*
  * Sets up the layout buttons to allow for toggling between view modes.
-//  */
+ */
 function setupButtons() {
   d3.select('#toolbar')
     .selectAll('.button')
