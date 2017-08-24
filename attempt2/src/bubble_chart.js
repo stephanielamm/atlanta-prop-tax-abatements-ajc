@@ -21,28 +21,63 @@ function bubbleChart() {
 
 
 var yearCenters = {
-  Atlanta: { x: width / 6, y: height / 3 },
-  'Union City': { x: width / 4, y: height / 3 },
-  'Sandy Springs': { x: width / 2, y: 2 * height / 3 },
-  Other: { x: 2 * width / 4, y: 2 * height / 3 }
+  // row 1
+  Alpharetta: { x: 100, y: 70 },
+  Atlanta: { x: 305, y: 70 },
+  Brookhaven: { x: 490, y: 70 },
+  'East Point': { x: 685, y: 70 },
+  // row 2
+  'Johns Creek': { x: 100, y: 330 },
+  'Sandy Springs': { x: 305, y: 330 },
+  'Six Flags': { x: 490, y: 330 },
+  Stonecrest: { x: 685, y: 330 },
+  // row 3
+  Tucker: { x: 100, y: 590 },
+  'Unincorporated DeKalb': { x: 305, y: 590 },
+  'Union City': { x: 490, y: 590 },
+  Other: { x: 685, y: 590 }
 
 };
 
 // X locations of the year titles.
 var yearsTitleX = {
-  Atlanta: width / 6,
-  'Union City': width / 6 + 100,
-  'Sandy Springs': width / 2,
-  Other: width / 2 + 100
+  // row 1
+  Alpharetta: 100,
+  Atlanta: 305,
+  Brookhaven: 490,
+  'East Point': 685,
+  // row 2
+  'Johns Creek':  100,
+  'Sandy Springs': 305,
+  'Six Flags':  490,
+  Stonecrest: 685,
+  // row 3
+  Tucker: 100,
+  'Unincorporated DeKalb': 305,
+  'Union City': 490,
+  Other: 685
+
 
   };
 
 // Y locations of the year titles.
 var yearsTitleY = {
-  Atlanta: height / 3,
-  'Union City': height / 3,
-  'Sandy Springs': 2 * height / 3,
-  Other: 2 * height / 3
+  // row 1
+  Alpharetta: 70,
+  Atlanta: 70,
+  Brookhaven: 70,
+  'East Point': 70,
+  // row 2
+  'Johns Creek': 330,
+  'Sandy Springs': 330,
+  'Six Flags': 330,
+  Stonecrest: 330,
+  // row 3
+  Tucker: 590,
+  'Unincorporated DeKalb': 590,
+  'Union City': 590,
+  Other: 590
+
 };
 
   // @v4 strength to apply to the position forces
