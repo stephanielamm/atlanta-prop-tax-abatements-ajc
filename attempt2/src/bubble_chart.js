@@ -22,20 +22,20 @@ function bubbleChart() {
 
 var yearCenters = {
   // row 1
-  Alpharetta: { x: 100, y: 70 },
-  Atlanta: { x: 305, y: 70 },
-  Brookhaven: { x: 490, y: 70 },
-  'East Point': { x: 685, y: 70 },
+  Alpharetta: { x: 120, y: 170 },
+  Atlanta: { x: 305, y: 195 },
+  Brookhaven: { x: 490, y: 170 },
+  'East Point': { x: 685, y: 170 },
   // row 2
-  'Johns Creek': { x: 100, y: 330 },
-  'Sandy Springs': { x: 305, y: 330 },
-  'Six Flags': { x: 490, y: 330 },
-  Stonecrest: { x: 685, y: 330 },
+  'Johns Creek': { x: 120, y: 400 },
+  'Sandy Springs': { x: 305, y: 400 },
+  'Six Flags': { x: 490, y: 400 },
+  Stonecrest: { x: 685, y: 400 },
   // row 3
-  Tucker: { x: 100, y: 590 },
-  'Unincorporated DeKalb': { x: 305, y: 590 },
-  'Union City': { x: 490, y: 590 },
-  Other: { x: 685, y: 590 }
+  Tucker: { x: 120, y: 610 },
+  'Unincorporated DeKalb': { x: 305, y: 610 },
+  'Union City': { x: 490, y: 610 },
+  Other: { x: 685, y: 620 }
 
 };
 
