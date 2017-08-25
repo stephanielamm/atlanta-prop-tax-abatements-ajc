@@ -34,7 +34,7 @@ a, a:visited, a:active {
   margin-top: 10px;
 }
 
-.year {
+.muni {
   font-size: 21px;
   fill: #aaa;
   cursor: default;
@@ -46,13 +46,13 @@ a, a:visited, a:active {
 	left: 100px;
   -moz-border-radius:5px;
 	border-radius: 5px;
-  border: 2px solid #000;
+  border: 1px solid #000;
   background: #fff;
 	opacity: .9;
   color: black;
 	padding: 10px;
 	width: 300px;
-	font-size: 12px;
+	font-size: 14px;
 	z-index: 10;
 }
 

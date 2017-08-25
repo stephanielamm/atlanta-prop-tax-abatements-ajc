@@ -1,10 +1,6 @@
-/* bubbleChart creation function. Returns a function that will
- * instantiate a new bubble chart given a DOM element to display
- * it in and a dataset to visualize.
- *
- * address and style inspired by:
- * https://bost.ocks.org/mike/chart/
- *
+/*
+/ Based on this tutorial by Jim Vallandingham http://vallandingham.me/bubble_charts_with_d3v4.html
+/ Special thanks to Julia Wolfe and Kristi Walker for fielding my questions during this project.
  */
 
 function bubbleChart() {
@@ -20,16 +16,16 @@ function bubbleChart() {
   var center = { x: width / 2, y: height / 2 };
 
 
-var yearCenters = {
+var muniCenters = {
   // row 1
   Alpharetta: { x: 120, y: 170 },
   Atlanta: { x: 305, y: 195 },
   Brookhaven: { x: 490, y: 170 },
-  'East Point': { x: 685, y: 170 },
+  'Cumberland County': { x: 685, y: 170 },
   // row 2
-  'Johns Creek': { x: 120, y: 400 },
-  'Sandy Springs': { x: 305, y: 400 },
-  'Six Flags': { x: 490, y: 400 },
+  'East Point': { x: 120, y: 400 },
+  'Johns Creek': { x: 305, y: 400 },
+  'Sandy Springs': { x: 490, y: 400 },
   Stonecrest: { x: 685, y: 400 },
   // row 3
   Tucker: { x: 120, y: 610 },
@@ -39,17 +35,17 @@ var yearCenters = {
 
 };
 
-// X locations of the year titles.
-var yearsTitleX = {
+// X locations of the municipality titles.
+var munisTitleX = {
   // row 1
   Alpharetta: 100,
   Atlanta: 305,
   Brookhaven: 490,
-  'East Point': 685,
+  'Cumberland County': 685,
   // row 2
-  'Johns Creek':  100,
-  'Sandy Springs': 305,
-  'Six Flags':  490,
+  'East Point':  100,
+  'Johns Creek': 305,
+  'Sandy Springs':  490,
   Stonecrest: 685,
   // row 3
   Tucker: 100,
@@ -60,17 +56,17 @@ var yearsTitleX = {
 
   };
 
-// Y locations of the year titles.
-var yearsTitleY = {
+// Y locations of the municipality titles.
+var munisTitleY = {
   // row 1
   Alpharetta: 70,
   Atlanta: 70,
   Brookhaven: 70,
-  'East Point': 70,
+  'Cumberland County': 70,
   // row 2
+  'East Point': 330,
   'Johns Creek': 330,
   'Sandy Springs': 330,
-  'Six Flags': 330,
   Stonecrest: 330,
   // row 3
   Tucker: 590,
@@ -120,17 +116,10 @@ var yearsTitleY = {
   //  which we don't want as there aren't any nodes yet.
   simulation.stop();
 
-  // Nice looking colors - no reason to buck the trend
-  // @v4 scales now have a flattened naming scheme
+  // set the colors. I chose to put percentages into 3 buckets.
   var fillColor = d3.scaleOrdinal()
     .domain(['low', 'medium', 'high'])
     .range(['#ED8451', '#CC3301', '#7A1E00']);
-
-  // - Create a variable, at a high-enough scope that the tick function can access it
-  // called something like 'currentMunicipality' and set it to 'none'
-  // var currentMunicipality = none;
-  // - In javascript, listen for changes to that dropdown,
-  // and when they occur, change the 'currentMunicipality' variable to equal that new value
 
 
   /*
@@ -171,7 +160,7 @@ var yearsTitleY = {
         taxes_abated: +d.taxes_abated,
         percent_abated: +d.percent_abated,
         group: d.group,
-        year: d.jur_buckets,
+        muni: d.jur_buckets,
         x: Math.random() * 900,
         y: Math.random() * 800
       };
@@ -257,26 +246,26 @@ var yearsTitleY = {
   }
 
   /*
-   * Provides a x value for each node to be used with the split by jurisdiction
+   * Provides a x value for each node to be used with the split by municipality
    * x force.
    */
-   function nodeYearPosX(d) {
-      return yearCenters[d.year].x;
+   function nodeMuniPosX(d) {
+      return muniCenters[d.muni].x;
     }
 
-    function nodeYearPosY(d) {
-       return yearCenters[d.year].y;
+    function nodeMuniPosY(d) {
+       return muniCenters[d.muni].y;
      }
 
 
   /*
    * Sets visualization in "single group mode".
-   * The jurisdiction labels are hidden and the force layout
+   * The municipality labels are hidden and the force layout
    * tick function is set to move all nodes to the
    * center of the visualization.
    */
    function groupBubbles() {
-     hideYearTitles();
+     hideMuniTitles();
 
     // @v4 Reset the 'x' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
@@ -289,44 +278,44 @@ var yearsTitleY = {
 
 
   /*
-   * Sets visualization in "split by jurisdiction mode".
-   * The jurisdiction labels are shown and the force layout
+   * Sets visualization in "split by municipality mode".
+   * The municipality labels are shown and the force layout
    * tick function is set to move nodes to the
-   * jurisdictionCenter of their data's jurisdiction.
+   * MuniCenter of their data's municipality.
    */
    function splitBubbles() {
-     showYearTitles();
+     showMuniTitles();
 
-     // @v4 Reset the 'x' force to draw the bubbles to their year centers
-     simulation.force('x', d3.forceX().strength(forceStrength).x(nodeYearPosX));
+     // @v4 Reset the 'x' and 'y' forces to draw the bubbles to their muni centers
+     simulation.force('x', d3.forceX().strength(forceStrength).x(nodeMuniPosX));
 
-     simulation.force('y', d3.forceY().strength(forceStrength).y(nodeYearPosY));
+     simulation.force('y', d3.forceY().strength(forceStrength).y(nodeMuniPosY));
 
      // @v4 We can reset the alpha value and restart the simulation
      simulation.alpha(1).restart();
    }
 
    /*
-    * Hides Year title displays.
+    * Hides municipality title displays.
     */
-   function hideYearTitles() {
-     svg.selectAll('.year').remove();
+   function hideMuniTitles() {
+     svg.selectAll('.muni').remove();
    }
 
    /*
-    * Shows Year title displays.
+    * Shows municipality title displays.
     */
-   function showYearTitles() {
+   function showMuniTitles() {
      // Another way to do this would be to create
-     // the year texts once and then just hide them.
-     var yearsData = d3.keys(yearsTitleX);
-     var years = svg.selectAll('.year')
-       .data(yearsData);
+     // the muni texts once and then just hide them.
+     var munisData = d3.keys(munisTitleX);
+     var munis = svg.selectAll('.muni')
+       .data(munisData);
 
-     years.enter().append('text')
-       .attr('class', 'year')
-       .attr('x', function (d) { return yearsTitleX[d]; })
-       .attr('y', function (d) { return yearsTitleY[d]; })
+     munis.enter().append('text')
+       .attr('class', 'muni')
+       .attr('x', function (d) { return munisTitleX[d]; })
+       .attr('y', function (d) { return munisTitleY[d]; })
        .attr('text-anchor', 'middle')
        .text(function (d) { return d; });
    }
@@ -355,7 +344,7 @@ var yearsTitleY = {
                   '<span class="name">Percent Abated: </span><span class="value">' +
                   d.percent_abated + '%' +
                   '</span><br/>' +
-                  '<span class="name">Jurisdiction: </span><span class="value">' +
+                  '<span class="name">Municipality: </span><span class="value">' +
                   d.jurisdiction +
                   '</span>';
 
@@ -376,12 +365,12 @@ var yearsTitleY = {
   /*
    * Externally accessible function (this is attached to the
    * returned chart function). Allows the visualization to toggle
-   * between "single group" and "split by jurisdiction" modes.
+   * between "single group" and "split by municipality" modes.
    *
-   * displayName is expected to be a string and either 'jurisdiction' or 'all'.
+   * displayName is expected to be a string and either 'municipality' or 'all'.
    */
    chart.toggleDisplay = function (displayName) {
-     if (displayName === 'year') {
+     if (displayName === 'muni') {
        splitBubbles();
      } else {
        groupBubbles();
