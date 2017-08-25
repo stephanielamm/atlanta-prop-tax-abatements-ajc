@@ -1,4 +1,4 @@
-d3.csv("data.csv", function(error, data) {
+d3.csv("data/taxes.csv", function(error, data) {
      if (error) throw error;
 
      var sortAscending = true;

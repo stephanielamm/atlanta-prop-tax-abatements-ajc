@@ -18,20 +18,20 @@ function bubbleChart() {
 
 var muniCenters = {
   // row 1
-  Alpharetta: { x: 120, y: 170 },
-  Atlanta: { x: 305, y: 195 },
-  Brookhaven: { x: 490, y: 170 },
-  'Cumberland County': { x: 685, y: 170 },
+  Alpharetta: { x: 160, y: 180 },
+  Atlanta: { x: 305, y: 220 },
+  Brookhaven: { x: 440, y: 180 },
+  'Cumberland County': { x: 640, y: 140 },
   // row 2
-  'East Point': { x: 120, y: 400 },
-  'Johns Creek': { x: 305, y: 400 },
-  'Sandy Springs': { x: 490, y: 400 },
-  Stonecrest: { x: 685, y: 400 },
+  'East Point': { x: 160, y: 370 },
+  'Johns Creek': { x: 305, y: 350 },
+  'Sandy Springs': { x: 470, y: 410 },
+  Stonecrest: { x: 635, y: 420 },
   // row 3
-  Tucker: { x: 120, y: 610 },
-  'Unincorporated DeKalb': { x: 305, y: 610 },
-  'Union City': { x: 490, y: 610 },
-  Other: { x: 685, y: 620 }
+  Tucker: { x: 160, y: 510 },
+  'DeKalb County': { x: 305, y: 510 },
+  'Union City': { x: 490, y: 510 },
+  Other: { x: 645, y: 550 }
 
 };
 
@@ -49,7 +49,7 @@ var munisTitleX = {
   Stonecrest: 685,
   // row 3
   Tucker: 100,
-  'Unincorporated DeKalb': 305,
+  'DeKalb County': 305,
   'Union City': 490,
   Other: 685
 
@@ -59,25 +59,25 @@ var munisTitleX = {
 // Y locations of the municipality titles.
 var munisTitleY = {
   // row 1
-  Alpharetta: 70,
-  Atlanta: 70,
-  Brookhaven: 70,
-  'Cumberland County': 70,
+  Alpharetta: 50,
+  Atlanta: 50,
+  Brookhaven: 50,
+  'Cumberland County': 50,
   // row 2
-  'East Point': 330,
-  'Johns Creek': 330,
-  'Sandy Springs': 330,
-  Stonecrest: 330,
+  'East Point': 380,
+  'Johns Creek': 380,
+  'Sandy Springs': 380,
+  Stonecrest: 380,
   // row 3
-  Tucker: 590,
-  'Unincorporated DeKalb': 590,
-  'Union City': 590,
-  Other: 590
+  Tucker: 530,
+  'DeKalb County': 530,
+  'Union City': 530,
+  Other: 530
 
 };
 
   // @v4 strength to apply to the position forces
-  var forceStrength = 0.03;
+  var forceStrength = 0.04;
 
   // These will be set in create_nodes and create_vis
   var svg = null;
@@ -142,8 +142,8 @@ var munisTitleY = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.9)
-      .range([5, 50])
+      .exponent(0.8)
+      .range([8, 55])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
