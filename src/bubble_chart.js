@@ -38,10 +38,10 @@ var muniCenters = {
 // X locations of the municipality titles.
 var munisTitleX = {
   // row 1
-  Alpharetta: 100,
-  Atlanta: 305,
-  Brookhaven: 490,
-  'Unincorporated Cobb': 685,
+  Alpharetta: 100, // width / 9.4
+  Atlanta: 305, // width / 3.08
+  Brookhaven: 490, // width / 1.91
+  'Unincorporated Cobb': 685, //  width / 1.37
   // row 2
   'East Point':  100,
   'Johns Creek': 305,
@@ -58,17 +58,17 @@ var munisTitleX = {
 
 // Y locations of the municipality titles.
 var munisTitleY = {
-  // row 1
+  // row 1 height / 16
   Alpharetta: 50,
   Atlanta: 50,
   Brookhaven: 50,
   'Unincorporated Cobb': 50,
-  // row 2
+  // row 2 height / 2.1
   'East Point': 380,
   'Johns Creek': 380,
   'Sandy Springs': 380,
   Stonecrest: 380,
-  // row 3
+  // row 3 height / 1.5
   Tucker: 530,
   'DeKalb County': 530,
   'Union City': 530,
@@ -77,7 +77,7 @@ var munisTitleY = {
 };
 
   // @v4 strength to apply to the position forces
-  var forceStrength = 0.04;
+  var forceStrength = 0.03;
 
   // These will be set in create_nodes and create_vis
   var svg = null;
