@@ -21,7 +21,7 @@ var muniCenters = {
   Alpharetta: { x: 160, y: 180 },
   Atlanta: { x: 305, y: 220 },
   Brookhaven: { x: 440, y: 180 },
-  'Cumberland County': { x: 640, y: 140 },
+  'Unincorporated Cobb': { x: 640, y: 140 },
   // row 2
   'East Point': { x: 160, y: 370 },
   'Johns Creek': { x: 305, y: 350 },
@@ -41,7 +41,7 @@ var munisTitleX = {
   Alpharetta: 100,
   Atlanta: 305,
   Brookhaven: 490,
-  'Cumberland County': 685,
+  'Unincorporated Cobb': 685,
   // row 2
   'East Point':  100,
   'Johns Creek': 305,
@@ -62,7 +62,7 @@ var munisTitleY = {
   Alpharetta: 50,
   Atlanta: 50,
   Brookhaven: 50,
-  'Cumberland County': 50,
+  'Unincorporated Cobb': 50,
   // row 2
   'East Point': 380,
   'Johns Creek': 380,
