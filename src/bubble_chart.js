@@ -24,7 +24,7 @@ var muniCenters = {
   'Unincorporated Cobb': { x: 640, y: 140 },
   // row 2
   'East Point': { x: 160, y: 370 },
-  'Johns Creek': { x: 305, y: 350 },
+  'Johns Creek': { x: 305, y: 340 },
   'Sandy Springs': { x: 470, y: 410 },
   Stonecrest: { x: 635, y: 420 },
   // row 3
@@ -77,7 +77,7 @@ var munisTitleY = {
 };
 
   // @v4 strength to apply to the position forces
-  var forceStrength = 0.03;
+  var forceStrength = 0.04;
 
   // These will be set in create_nodes and create_vis
   var svg = null;
@@ -99,7 +99,7 @@ var munisTitleY = {
   // @v4 Before the charge was a stand-alone attribute
   //  of the force layout. Now we can use it as a separate force!
   function charge(d) {
-    return -Math.pow(d.radius, 2.0) * forceStrength;
+    return -Math.pow(d.radius, 2.02) * forceStrength;
   }
 
   // Here we create a force layout and
@@ -142,7 +142,7 @@ var munisTitleY = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.8)
+      .exponent(0.75)
       .range([8, 55])
       .domain([0, maxAmount]);
 
