@@ -13,20 +13,25 @@ function bubbleChart() {
 
   // Constants for sizing
   var width = divDimensions.width;
-  var height = 1700;
+  var height = 800;
 
   // For big screens
-  if (window.innerWidth > 768) {
+  if (window.innerWidth >= 768) {
     numColumns = 4;
-    numRows = 3;
+  } else if (window.innerWidth > 484 & window.innerWidth < 768) {
+    numColumns = 2
+  } else {
+    numColumns = 1;
   }
+
+  numRows = 12 / numColumns;
 
   // tooltip for mouseover functionality
   var tooltip = floatingTooltip('tooltip', 240);
 
   // Locations to move bubbles towards, depending
   // on which view mode is selected.
-  var center = { x: width / 2, y: height / 2 };
+  var center = { x: .1 * width, y: height / 3 };
 
 
 var breakDivs = d3.selectAll('.breakout-div');
@@ -36,8 +41,38 @@ var cities = ["Atlanta", "Unincorporated Cobb County", "Stonecrest", "Unincorpor
 
 breakDivs.each(function(el, i) {
   var coords = d3.select(this).node().getBoundingClientRect();
-  muniCenters[cities[i]] = {x: coords.left + 90, y: coords.top + 200};
-});
+
+  muniCenters[cities[i]] = { 
+    x: coords.left
+  };
+
+  if (window.innerWidth > 768) {
+    if (i < 4) {
+      muniCenters[cities[i]].y = 200;
+    } else if (i < 8) {
+      muniCenters[cities[i]].y = 100 + (height / numRows);
+    } else {
+      muniCenters[cities[i]].y = 100 + (2 * height / numRows);
+    }
+  }
+
+
+})
+
+// cities.forEach(function(city, i) {
+//   muniCenters[city] = { 
+//     x: 100 + (i % numColumns) * (width / numColumns),
+//   };
+
+//   if (i < 4) {
+//     muniCenters[city].y = .2 * height;
+//   } else if (i < 8) {
+//     muniCenters[city].y = height / numRows;
+//   } else {
+//     muniCenters[city].y = 2 * height / numRows;
+//   }
+// })
+
 
 
 console.log(muniCenters)
@@ -59,26 +94,27 @@ console.log(muniCenters)
 //   'Unincorporated DeKalb County': { x: 305, y: 510 },
 //   'Union City': { x: 490, y: 510 },
 //   Other: { x: 645, y: 550 }
-//
+
 // };
+
 
 // X locations of the municipality titles.
 var munisTitleX = {
   // row 1
-  // Alpharetta: 100, // width / 9.4
-  // Atlanta: 305, // width / 3.08
-  // Brookhaven: 490, // width / 1.91
-  // 'Unincorporated Cobb County': 685, //  width / 1.37
-  // // row 2
-  // 'East Point':  100,
-  // 'Johns Creek': 305,
-  // 'Sandy Springs':  490,
-  // Stonecrest: 685,
-  // // row 3
-  // Tucker: 100,
-  // 'Unincorporated DeKalb County': 305,
-  // 'Union City': 490,
-  // Other: 685
+  Alpharetta: 100, // width / 9.4
+  Atlanta: 305, // width / 3.08
+  Brookhaven: 490, // width / 1.91
+  'Unincorporated Cobb County': 685, //  width / 1.37
+  // row 2
+  'East Point':  100,
+  'Johns Creek': 305,
+  'Sandy Springs':  490,
+  Stonecrest: 685,
+  // row 3
+  Tucker: 100,
+  'Unincorporated DeKalb County': 305,
+  'Union City': 490,
+  Other: 685
 
 
   };
@@ -86,20 +122,20 @@ var munisTitleX = {
 // Y locations of the municipality titles.
 var munisTitleY = {
   // row 1 height / 16
-  // Alpharetta: 50,
-  // Atlanta: 50,
-  // Brookhaven: 50,
-  // 'Unincorporated Cobb County': 50,
-  // // row 2 height / 2.1
-  // 'East Point': 380,
-  // 'Johns Creek': 380,
-  // 'Sandy Springs': 380,
-  // Stonecrest: 380,
-  // // row 3 height / 1.5
-  // Tucker: 530,
-  // 'Unincorporated DeKalb County': 530,
-  // 'Union City': 530,
-  // Other: 530
+  Alpharetta: 50,
+  Atlanta: 50,
+  Brookhaven: 50,
+  'Unincorporated Cobb County': 50,
+  // row 2 height / 2.1
+  'East Point': 380,
+  'Johns Creek': 380,
+  'Sandy Springs': 380,
+  Stonecrest: 380,
+  // row 3 height / 1.5
+  Tucker: 530,
+  'Unincorporated DeKalb County': 530,
+  'Union City': 530,
+  Other: 530
 
 };
 
@@ -126,7 +162,7 @@ var munisTitleY = {
   // @v4 Before the charge was a stand-alone attribute
   //  of the force layout. Now we can use it as a separate force!
   function charge(d) {
-    return -Math.pow(d.radius, 2.02) * forceStrength;
+    return -Math.pow(d.radius, 2) * forceStrength;
   }
 
   // Here we create a force layout and
@@ -170,7 +206,7 @@ var munisTitleY = {
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
       .exponent(0.75)
-      .range([8, 55])
+      .range([4, 35])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
@@ -188,8 +224,8 @@ var munisTitleY = {
         percent_abated: +d.percent_abated,
         group: d.group,
         muni: d.jur_buckets,
-        x: Math.random() * 900,
-        y: Math.random() * 800
+        x: Math.random() * divDimensions.width,
+        y: Math.random() * height
       };
     });
 
@@ -282,9 +318,9 @@ var munisTitleY = {
       return muniCenters[d.muni].x;
     }
 
-    function nodeMuniPosY(d) {
-       return muniCenters[d.muni].y;
-     }
+  function nodeMuniPosY(d) {
+    return muniCenters[d.muni].y;
+  }
 
 
   /*

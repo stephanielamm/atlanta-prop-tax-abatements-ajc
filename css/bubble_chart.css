@@ -1,3 +1,11 @@
+body {
+  margin: 0 auto;
+}
+
+.row {
+  max-width: 50em;
+}
+
 a, a:visited, a:active {
   color: #444;
 }
@@ -64,6 +72,8 @@ a, a:visited, a:active {
   font-weight:bold;
 }
 
-.breakout-div {
-  height: 150px;
+@media screen and (max-width: 484px) {
+  .breakout-div {
+    height: 200px;
+  }
 }
