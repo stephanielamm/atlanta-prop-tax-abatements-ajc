@@ -24,8 +24,8 @@ a, a:visited, a:active {
 
 
 #vis {
-  /*width: 940px;*/
-  height: 600px;
+/*  width: 940px;
+  height: 600px; */
   clear: both;
   margin-bottom: 10px;
 }
@@ -35,7 +35,7 @@ a, a:visited, a:active {
 }
 
 .muni {
-  font-size: 21px;
+  font-size: 18px;
   fill: #aaa;
   cursor: default;
 }
@@ -62,8 +62,4 @@ a, a:visited, a:active {
 
 .tooltip .name {
   font-weight:bold;
-}
-
-.breakout-div {
-  height: 150px;
 }

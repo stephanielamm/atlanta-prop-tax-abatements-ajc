@@ -2,10 +2,7 @@
 / Based on this tutorial by Jim Vallandingham http://vallandingham.me/bubble_charts_with_d3v4.html
 / Special thanks to Julia Wolfe and Kristi Walker for fielding my questions during this project.
  */
-
 var boundingDiv = d3.select('#vis');
-var numRows,
-    numColumns;
 
 function bubbleChart() {
 
@@ -13,13 +10,11 @@ function bubbleChart() {
 
   // Constants for sizing
   var width = divDimensions.width;
-  var height = 1700;
+  var height = 600;
 
-  // For big screens
-  if (window.innerWidth > 768) {
-    numColumns = 4;
-    numRows = 3;
-  }
+  // // Constants for sizing
+  // var width = 500;
+  // var height = 800;
 
   // tooltip for mouseover functionality
   var tooltip = floatingTooltip('tooltip', 240);
@@ -29,79 +24,72 @@ function bubbleChart() {
   var center = { x: width / 2, y: height / 2 };
 
 
-var breakDivs = d3.selectAll('.breakout-div');
+var muniCenters = {
+  // row 1
+  Alpharetta: { x: (width / 10 + 30), y: 110 },
+  Atlanta: { x: (width / 2), y: 120 },
+  Brookhaven: { x: (width - (width / 7) - 25), y: 100 },
 
-var muniCenters = {};
-var cities = ["Atlanta", "Unincorporated Cobb County", "Stonecrest", "Unincorporated DeKalb County", "Alpharetta", "Johns Creek", "Other", "Union City", "Sandy Springs", "Tucker", "East Point", "Brookhaven"].sort();
+  // row 2
+  'Cobb County': { x: (width / 10 + 20), y: 230 },
+  'East Point': { x: (width / 2), y: 200 },
+  'Johns Creek': { x: (width - (width / 7) - 25), y: 235 },
 
-breakDivs.each(function(el, i) {
-  var coords = d3.select(this).node().getBoundingClientRect();
-  muniCenters[cities[i]] = {x: coords.left + 90, y: coords.top + 200};
-});
+  // row 3
+  'Sandy Springs': { x: (width / 10 + 20), y: 325 },
+  Stonecrest: { x: (width / 2), y: 300 },
+  Tucker: { x: (width - (width / 7) - 10), y: 310 },
+  // row 4
+  'DeKalb County': { x: (width / 10 + 20), y: 410 },
+  'Union City': { x: (width / 2), y: 410 },
+  Other: { x: (width - (width / 7) - 10), y: 430 }
 
-
-console.log(muniCenters)
-//
-//
-// var muniCenters = {
-//   // row 1
-//   Alpharetta: { x: 160, y: 180 },
-//   Atlanta: { x: 305, y: 220 },
-//   Brookhaven: { x: 440, y: 180 },
-//   'Unincorporated Cobb County': { x: 640, y: 140 },
-//   // row 2
-//   'East Point': { x: 160, y: 370 },
-//   'Johns Creek': { x: 305, y: 340 },
-//   'Sandy Springs': { x: 470, y: 410 },
-//   Stonecrest: { x: 635, y: 420 },
-//   // row 3
-//   Tucker: { x: 160, y: 510 },
-//   'Unincorporated DeKalb County': { x: 305, y: 510 },
-//   'Union City': { x: 490, y: 510 },
-//   Other: { x: 645, y: 550 }
-//
-// };
+};
 
 // X locations of the municipality titles.
 var munisTitleX = {
-  // row 1
-  // Alpharetta: 100, // width / 9.4
-  // Atlanta: 305, // width / 3.08
-  // Brookhaven: 490, // width / 1.91
-  // 'Unincorporated Cobb County': 685, //  width / 1.37
-  // // row 2
-  // 'East Point':  100,
-  // 'Johns Creek': 305,
-  // 'Sandy Springs':  490,
-  // Stonecrest: 685,
-  // // row 3
-  // Tucker: 100,
-  // 'Unincorporated DeKalb County': 305,
-  // 'Union City': 490,
-  // Other: 685
+// row 1
+  Alpharetta: (width / 10 + 10), // width / 9.4
+  Atlanta: (width / 2), // width / 3.08
+  Brookhaven: (width - (width / 7)), // width / 1.91
+// row 2
+  'Cobb County': (width / 10 + 20), //  width / 1.37
+  'East Point':  (width / 2),
+  'Johns Creek': (width - (width / 7)),
+// row 3
+  'Sandy Springs':  (width / 10 + 25),
+  Stonecrest: (width / 2),
+  Tucker: (width - (width / 7)),
+// row 4
+  'DeKalb County': (width / 10 + 28),
+  'Union City': (width / 2),
+  Other: (width - (width / 7))
 
 
   };
 
 // Y locations of the municipality titles.
 var munisTitleY = {
-  // row 1 height / 16
-  // Alpharetta: 50,
-  // Atlanta: 50,
-  // Brookhaven: 50,
-  // 'Unincorporated Cobb County': 50,
-  // // row 2 height / 2.1
-  // 'East Point': 380,
-  // 'Johns Creek': 380,
-  // 'Sandy Springs': 380,
-  // Stonecrest: 380,
-  // // row 3 height / 1.5
-  // Tucker: 530,
-  // 'Unincorporated DeKalb County': 530,
-  // 'Union City': 530,
-  // Other: 530
+// row 1 height / 16
+  Alpharetta: 30,
+  Atlanta: 30,
+  Brookhaven: 30,
+
+// row 2 height / 2.1
+  'Cobb County': 210,
+  'East Point': 210,
+  'Johns Creek': 210,
+// row 3 height / 1.5
+  'Sandy Springs': 300,
+  Stonecrest: 300,
+  Tucker: 300,
+// row 4
+  'DeKalb County': 400,
+  'Union City': 400,
+  Other: 400
 
 };
+
 
   // @v4 strength to apply to the position forces
   var forceStrength = 0.04;
@@ -126,7 +114,7 @@ var munisTitleY = {
   // @v4 Before the charge was a stand-alone attribute
   //  of the force layout. Now we can use it as a separate force!
   function charge(d) {
-    return -Math.pow(d.radius, 2.02) * forceStrength;
+    return -Math.pow(d.radius, 2.0) * forceStrength;
   }
 
   // Here we create a force layout and
@@ -169,8 +157,8 @@ var munisTitleY = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.75)
-      .range([8, 55])
+      .exponent(0.8)
+      .range([4, 30])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
@@ -213,8 +201,6 @@ var munisTitleY = {
    * a d3 loading function like d3.csv.
    */
   var chart = function chart(selector, rawData) {
-
-
     // convert raw data into nodes data
     nodes = createNodes(rawData);
 
@@ -426,10 +412,6 @@ function display(error, data) {
   if (error) {
     console.log(error);
   }
-
-  var cities = d3.set(data.map(function(d) { return d.jur_buckets; })).values();
-
-  console.log(cities)
 
   myBubbleChart('#vis', data);
 }
