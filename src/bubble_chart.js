@@ -10,7 +10,7 @@ function bubbleChart() {
 
   // Constants for sizing
   var width = divDimensions.width;
-  var height = 600;
+  var height = 800;
 
   // // Constants for sizing
   // var width = 500;
@@ -26,7 +26,7 @@ function bubbleChart() {
 
 var muniCenters = {
   // row 1
-  Alpharetta: { x: (width / 10 + 30), y: 110 },
+  Alpharetta: { x: (width / 10 + 35), y: 110 },
   Atlanta: { x: (width / 2), y: 120 },
   Brookhaven: { x: (width - (width / 7) - 25), y: 100 },
 
@@ -158,7 +158,7 @@ var munisTitleY = {
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
       .exponent(0.8)
-      .range([4, 30])
+      .range([5, 30])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
