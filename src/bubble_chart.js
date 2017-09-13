@@ -10,7 +10,7 @@ function bubbleChart() {
 
   // Constants for sizing
   var width = divDimensions.width;
-  var height = 800;
+  var height = 500;
 
   // // Constants for sizing
   // var width = 500;
@@ -26,23 +26,23 @@ function bubbleChart() {
 
 var muniCenters = {
   // row 1
-  Alpharetta: { x: (width / 10 + 35), y: 110 },
-  Atlanta: { x: (width / 2), y: 120 },
-  Brookhaven: { x: (width - (width / 7) - 25), y: 100 },
+  Alpharetta: { x: (width / 10 + 65), y: 120 },
+  Atlanta: { x: (width / 2), y: 140 },
+  Brookhaven: { x: (width - (width / 7) - 50), y: 110 },
 
   // row 2
-  'Cobb County': { x: (width / 10 + 20), y: 230 },
-  'East Point': { x: (width / 2), y: 200 },
-  'Johns Creek': { x: (width - (width / 7) - 25), y: 235 },
+  'Cobb County': { x: (width / 10 + 48), y: 260 },
+  'East Point': { x: (width / 2), y: 210 },
+  'Johns Creek': { x: (width - (width / 7) - 45), y: 250 },
 
   // row 3
-  'Sandy Springs': { x: (width / 10 + 20), y: 325 },
-  Stonecrest: { x: (width / 2), y: 300 },
-  Tucker: { x: (width - (width / 7) - 10), y: 310 },
+  'Sandy Springs': { x: (width / 10 + 40), y: 325 },
+  Stonecrest: { x: (width / 2), y: 315 },
+  Tucker: { x: (width - (width / 7) - 35), y: 315 },
   // row 4
-  'DeKalb County': { x: (width / 10 + 20), y: 410 },
-  'Union City': { x: (width / 2), y: 410 },
-  Other: { x: (width - (width / 7) - 10), y: 430 }
+  'DeKalb County': { x: (width / 10 + 30), y: 410 },
+  'Union City': { x: (width / 2), y: 400 },
+  Other: { x: (width - (width / 7) - 30), y: 410 }
 
 };
 
@@ -71,22 +71,22 @@ var munisTitleX = {
 // Y locations of the municipality titles.
 var munisTitleY = {
 // row 1 height / 16
-  Alpharetta: 30,
-  Atlanta: 30,
-  Brookhaven: 30,
+  Alpharetta: 20,
+  Atlanta: 20,
+  Brookhaven: 20,
 
 // row 2 height / 2.1
-  'Cobb County': 210,
-  'East Point': 210,
-  'Johns Creek': 210,
+  'Cobb County': 240,
+  'East Point': 240,
+  'Johns Creek': 240,
 // row 3 height / 1.5
-  'Sandy Springs': 300,
-  Stonecrest: 300,
-  Tucker: 300,
+  'Sandy Springs': 325,
+  Stonecrest: 325,
+  Tucker: 325,
 // row 4
-  'DeKalb County': 400,
-  'Union City': 400,
-  Other: 400
+  'DeKalb County': 410,
+  'Union City': 410,
+  Other: 410
 
 };
 
@@ -157,7 +157,7 @@ var munisTitleY = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.8)
+      .exponent(0.5)
       .range([5, 30])
       .domain([0, maxAmount]);
 

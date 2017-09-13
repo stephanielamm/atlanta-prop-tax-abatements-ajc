@@ -67,6 +67,8 @@ a, a:visited, a:active {
 .my-legend .legend-title {
     text-align: left;
     margin-bottom: 8px;
+    margin-top: 8px;
+    margin-left: 4px;
     font-weight: bold;
     font-size: 90%;
     }
@@ -99,3 +101,13 @@ a, a:visited, a:active {
   .my-legend a {
     color: #777;
     }
+
+.infotip {
+    position: absolute;
+    opacity: 0;
+    background-color: rgba(255,255,255, 0.9);
+    font-size: 13px;
+    font-weight: bold;
+    width: 60px;
+    padding: 5px 0;
+  }
