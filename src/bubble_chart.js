@@ -3,6 +3,8 @@
 / Special thanks to Julia Wolfe and Kristi Walker for fielding my questions during this project.
  */
 var boundingDiv = d3.select('#vis');
+var tooltip = d3.select('.infotip');
+var isMobile = (window.innerWidth < 768) ? true: false;
 
 function bubbleChart() {
 
@@ -17,7 +19,6 @@ function bubbleChart() {
   // var height = 800;
 
   // tooltip for mouseover functionality
-  var tooltip = floatingTooltip('tooltip', 240);
 
   // Locations to move bubbles towards, depending
   // on which view mode is selected.
@@ -226,7 +227,20 @@ var munisTitleY = {
       .attr('fill', function (d) { return fillColor(d.group); })
       .attr('stroke', function (d) { return d3.rgb(fillColor(d.group)).darker(); })
       .attr('stroke-width', 1)
-      .on('mouseover', showDetail)
+      .on('mousemove', function(d) {
+
+        var firstChild = this.parentNode.firstChild;
+        if (firstChild) {
+          this.parentNode.insertBefore(this, firstChild);
+        }
+        d3.select(this)
+          .classed('highlight', true);
+
+        var x = d3.event.pageX,
+            y = d3.event.pageY;
+
+        showDetail(d, x, y);
+      })
       .on('mouseout', hideDetail);
 
     // @v4 Merge the original empty selection and the enter selection
@@ -340,30 +354,56 @@ var munisTitleY = {
    * Function called on mouseover to display the
    * details of a bubble in the tooltip.
    */
-  function showDetail(d) {
+  function showDetail(d, x, y) {
     // change outline to indicate hover state.
-    d3.select(this).attr('stroke', 'black');
+    // d3.select(this).attr('stroke', 'black');
 
-    var content = '<span class="name">Property: </span><span class="value">' +
+    var content = '<p class="name">Property: </span><span class="value">' +
                   d.property +
-                  '</span><br/>' +
-                  '<span class="name">Assessed Value: </span><span class="value">$' +
+                  '</p>' +
+                  '<p class="name">Assessed Value: </span><span class="value">' +
                   addCommas(d.assessed_value) +
-                  '</span><br/>' +
-                  '<span class="name">Taxes Owed: </span><span class="value">$' +
+                  '</p>' +
+                  '<p class="name">Taxes Owed: </span><span class="value">' +
                   addCommas(d.taxes_owed) +
-                  '</span><br/>' +
-                  '<span class="name">Taxes Abated: </span><span class="value">$' +
+                  '</p>' +
+                  '<p class="name">Taxes Abated: </span><span class="value">' +
                   addCommas(d.taxes_abated) +
-                  '</span><br/>' +
-                  '<span class="name">Percent Abated: </span><span class="value">' +
+                  '</p>' +
+                  '<p class="name">Percent Abated: </span><span class="value">' +
                   d.percent_abated + '%' +
-                  '</span><br/>' +
-                  '<span class="name">Municipality: </span><span class="value">' +
+                  '</p>' +
+                  '<p class="name">Municipality: </span><span class="value">' +
                   d.jurisdiction +
                   '</span>';
 
-    tooltip.showTooltip(content, d3.event);
+    // tooltip.
+    //
+    // tooltip.showTooltip(content, d3.event);
+    // If mouseover happens at a point that is beyond half the screenwidth, push the tooltip a little to the left so that it doesn't go out of view
+    // tooltip.style('left', (x - 60) + 'px')
+    //       .style('top', (y + 20) + 'px')
+
+    console.log('x', x, 'innerWidth', window.innerWidth);
+
+    var pushLeft = 140;
+
+    // if it's mobile screen, be more careful about how you place the tooltip on the screen
+    if(isMobile) {
+      if (x > window.innerWidth / 2) {
+        tooltip.style('left', (x - pushLeft) + 'px')
+      } else {
+        tooltip.style('left', x + 'px')
+      }
+    } else { // If not mobile screen
+      tooltip.style('left', x + 'px')
+    }
+
+    // Add the top coordinates, show it and add the HTML content
+    tooltip
+        .style('top', (y + 20) + 'px')
+        .classed('show', true)
+        .html(content);
   }
 
   /*
@@ -372,9 +412,10 @@ var munisTitleY = {
   function hideDetail(d) {
     // reset outline
     d3.select(this)
+      .classed('highlight', false)
       .attr('stroke', d3.rgb(fillColor(d.group)).darker());
 
-    tooltip.hideTooltip();
+    tooltip.classed('show', false);
   }
 
   /*
@@ -445,16 +486,19 @@ function setupButtons() {
  * and add commas to it to improve presentation.
  */
 function addCommas(nStr) {
-  nStr += '';
-  var x = nStr.split('.');
-  var x1 = x[0];
-  var x2 = x.length > 1 ? '.' + x[1] : '';
-  var rgx = /(\d+)(\d{3})/;
-  while (rgx.test(x1)) {
-    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+  if (parseFloat(nStr) > 999999) {
+    return '$' + (parseFloat(nStr) / 1000000).toFixed(1) + ' million'
+  } else {
+      nStr += '';
+      var x = nStr.split('.');
+      var x1 = x[0];
+      var x2 = x.length > 1 ? '.' + x[1] : '';
+      var rgx = /(\d+)(\d{3})/;
+      while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+      }
+      return x1 + x2;
   }
-
-  return x1 + x2;
 }
 
 // Load the data.

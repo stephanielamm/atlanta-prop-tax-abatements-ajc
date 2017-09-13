@@ -61,7 +61,13 @@ a, a:visited, a:active {
 }
 
 .tooltip .name {
-  font-weight:bold;
+  /*font-weight: bold;*/
+}
+
+.name {
+  margin: 0;
+  margin-top: .5em;
+  line-height: 10px;
 }
 
 .my-legend .legend-title {
@@ -109,5 +115,19 @@ a, a:visited, a:active {
     font-size: 13px;
     font-weight: bold;
     width: 60px;
-    padding: 5px 0;
+    padding: 5px;
+    width: 200px;
   }
+
+.show {
+  opacity: 1;
+}
+
+.hide {
+  opacity: 0;
+}
+
+.highlight {
+  stroke: #000;
+  stroke-width: 3px;
+}
