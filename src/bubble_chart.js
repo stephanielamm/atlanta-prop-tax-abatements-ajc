@@ -2,9 +2,11 @@
 / Based on this tutorial by Jim Vallandingham http://vallandingham.me/bubble_charts_with_d3v4.html
 / Special thanks to Julia Wolfe and Kristi Walker for fielding my questions during this project.
  */
+var pymChild = new pym.Child();
 var boundingDiv = d3.select('#vis');
 var tooltip = d3.select('.infotip');
 var isMobile = (window.innerWidth < 768) ? true: false;
+
 
 function bubbleChart() {
 
@@ -32,18 +34,18 @@ var muniCenters = {
   Brookhaven: { x: (width - (width / 7) - 50), y: 110 },
 
   // row 2
-  'Cobb County': { x: (width / 10 + 48), y: 260 },
+  'Cobb County': { x: (width / 10 + 48), y: 265 },
   'East Point': { x: (width / 2), y: 210 },
-  'Johns Creek': { x: (width - (width / 7) - 45), y: 250 },
+  'Johns Creek': { x: (width - (width / 7) - 45), y: 280 },
 
   // row 3
-  'Sandy Springs': { x: (width / 10 + 40), y: 325 },
+  'Sandy Springs': { x: (width / 10 + 40), y: 360 },
   Stonecrest: { x: (width / 2), y: 315 },
-  Tucker: { x: (width - (width / 7) - 35), y: 315 },
+  Tucker: { x: (width - (width / 7) - 35), y: 360 },
   // row 4
   'DeKalb County': { x: (width / 10 + 30), y: 410 },
   'Union City': { x: (width / 2), y: 400 },
-  Other: { x: (width - (width / 7) - 30), y: 410 }
+  Other: { x: (width - (width / 7) - 30), y: 425 }
 
 };
 
@@ -85,9 +87,9 @@ var munisTitleY = {
   Stonecrest: 325,
   Tucker: 325,
 // row 4
-  'DeKalb County': 410,
-  'Union City': 410,
-  Other: 410
+  'DeKalb County': 400,
+  'Union City': 400,
+  Other: 400
 
 };
 
@@ -364,13 +366,13 @@ var munisTitleY = {
                   // '<p class="name">Assessed Value: </span><span class="value">' +
                   // addCommas(d.assessed_value) +
                   // '</p>' +
-                  '<span class="name">Taxes Abated: </span><span class="value">$' +
+                  '<span class="name">Taxes abated: </span><span class="value">$' +
                   addCommas(d.taxes_abated) +
                   '</span><br/>' +
-                  '<span class="name">Taxes Due: </span><span class="value">$' +
+                  '<span class="name">Taxes due: </span><span class="value">$' +
                   addCommas(d.taxes_owed) +
                   '</span><br/>' +
-                  '<span class="name">Percent Abated: </span><span class="value">' +
+                  '<span class="name">Percent abated: </span><span class="value">' +
                   d.percent_abated + '%' +
                   '</span><br/>' +
                   '<span class="name">Municipality: </span><span class="value">' +
@@ -384,24 +386,34 @@ var munisTitleY = {
     // tooltip.style('left', (x - 60) + 'px')
     //       .style('top', (y + 20) + 'px')
 
-    console.log('x', x, 'innerWidth', window.innerWidth);
-
-    var pushLeft = 140;
+    // Offset for tooltip positioning
+    var pushLeft = 140,
+        pushTop = 120;
 
     // if it's mobile screen, be more careful about how you place the tooltip on the screen
-    if(isMobile) {
+    // if(isMobile) {
       if (x > window.innerWidth / 2) {
         tooltip.style('left', (x - pushLeft) + 'px')
       } else {
         tooltip.style('left', x + 'px')
       }
-    } else { // If not mobile screen
-      tooltip.style('left', x + 'px')
-    }
+
+      if (y > height / 2) {
+        tooltip.style('top', (y - pushTop) + 'px')
+      } else {
+          tooltip
+            .style('top', (y + 5) + 'px')
+      }
+    // }
+
+    // else { // If not mobile screen
+    //   tooltip
+    //     .style('left', x + 'px')
+    //     .style('top', (y + 5) + 'px')
+    // }
 
     // Add the top coordinates, show it and add the HTML content
     tooltip
-        .style('top', (y + 20) + 'px')
         .classed('show', true)
         .html(content);
   }
@@ -433,7 +445,7 @@ var munisTitleY = {
      }
    };
 
-
+  pymChild.sendHeight();
   // return the chart function from closure.
   return chart;
 }

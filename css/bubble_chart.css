@@ -113,7 +113,6 @@ a, a:visited, a:active {
     opacity: 0;
     background-color: rgba(255,255,255, 0.9);
     font-size: 13px;
-    border-radius: 5px;
     border: 1px solid #000;
     width: 60px;
     padding: 3px;
@@ -130,5 +129,5 @@ a, a:visited, a:active {
 
 .highlight {
   stroke: #000;
-  stroke-width: 3px;
+  stroke-width: 2px;
 }
