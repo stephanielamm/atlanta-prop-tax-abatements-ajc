@@ -437,7 +437,9 @@ var myBubbleChart = bubbleChart();
  * Calls bubble chart function to display inside #vis div.
  */
 function display(error, data) {
-  if error throw error;
+  if (error) {
+    throw error
+  }
   myBubbleChart('#vis', data);
 }
 

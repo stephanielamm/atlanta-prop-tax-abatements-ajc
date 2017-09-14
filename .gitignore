@@ -2,3 +2,5 @@
 node_modules/
 dist/
 npm-debug.log*
+src/main.js
+src/main.js.map
