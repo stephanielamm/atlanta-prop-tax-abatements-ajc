@@ -7,91 +7,84 @@ var boundingDiv = d3.select('#vis');
 var tooltip = d3.select('.infotip');
 var isMobile = (window.innerWidth < 768) ? true: false;
 
+var buttons = d3.selectAll('.button');
+
 
 function bubbleChart() {
-
   var divDimensions = boundingDiv.node().getBoundingClientRect();
 
   // Constants for sizing
   var width = divDimensions.width;
   var height = 500;
 
-  // // Constants for sizing
-  // var width = 500;
-  // var height = 800;
-
-  // tooltip for mouseover functionality
-
   // Locations to move bubbles towards, depending
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
 
 
-var muniCenters = {
-  // row 1
-  Alpharetta: { x: (width / 10 + 65), y: 120 },
-  Atlanta: { x: (width / 2), y: 140 },
-  Brookhaven: { x: (width - (width / 7) - 50), y: 110 },
+  var muniCenters = {
+    // row 1
+    Alpharetta: { x: (width / 10 + 65), y: 120 },
+    Atlanta: { x: (width / 2), y: 140 },
+    Brookhaven: { x: (width - (width / 7) - 50), y: 110 },
 
-  // row 2
-  'Cobb County': { x: (width / 10 + 48), y: 260 },
-  'East Point': { x: (width / 2), y: 210 },
-  'Johns Creek': { x: (width - (width / 7) - 45), y: 265 },
+    // row 2
+    'Cobb County': { x: (width / 10 + 48), y: 260 },
+    'East Point': { x: (width / 2), y: 210 },
+    'Johns Creek': { x: (width - (width / 7) - 45), y: 265 },
 
-  // row 3
-  'Sandy Springs': { x: (width / 10 + 40), y: 330 },
-  Stonecrest: { x: (width / 2), y: 315 },
-  Tucker: { x: (width - (width / 7) - 35), y: 325 },
-  // row 4
-  'DeKalb County': { x: (width / 10 + 30), y: 400 },
-  'Union City': { x: (width / 2), y: 400 },
-  Other: { x: (width - (width / 7) - 30), y: 415 }
-
-};
-
-// X locations of the municipality titles.
-var munisTitleX = {
-// row 1
-  Alpharetta: (width / 10 + 10), // width / 9.4
-  Atlanta: (width / 2), // width / 3.08
-  Brookhaven: (width - (width / 7)), // width / 1.91
-// row 2
-  'Cobb County': (width / 10 + 20), //  width / 1.37
-  'East Point':  (width / 2),
-  'Johns Creek': (width - (width / 7)),
-// row 3
-  'Sandy Springs':  (width / 10 + 25),
-  Stonecrest: (width / 2),
-  Tucker: (width - (width / 7)),
-// row 4
-  'DeKalb County': (width / 10 + 28),
-  'Union City': (width / 2),
-  Other: (width - (width / 7))
-
+    // row 3
+    'Sandy Springs': { x: (width / 10 + 40), y: 330 },
+    Stonecrest: { x: (width / 2), y: 315 },
+    Tucker: { x: (width - (width / 7) - 35), y: 325 },
+    // row 4
+    'DeKalb County': { x: (width / 10 + 30), y: 400 },
+    'Union City': { x: (width / 2), y: 400 },
+    Other: { x: (width - (width / 7) - 30), y: 415 }
 
   };
 
-// Y locations of the municipality titles.
-var munisTitleY = {
-// row 1 height / 16
-  Alpharetta: 20,
-  Atlanta: 20,
-  Brookhaven: 20,
+  // X locations of the municipality titles.
+  var munisTitleX = {
+  // row 1
+    Alpharetta: (width / 10 + 10), // width / 9.4
+    Atlanta: (width / 2), // width / 3.08
+    Brookhaven: (width - (width / 7)), // width / 1.91
+  // row 2
+    'Cobb County': (width / 10 + 20), //  width / 1.37
+    'East Point':  (width / 2),
+    'Johns Creek': (width - (width / 7)),
+  // row 3
+    'Sandy Springs':  (width / 10 + 25),
+    Stonecrest: (width / 2),
+    Tucker: (width - (width / 7)),
+  // row 4
+    'DeKalb County': (width / 10 + 28),
+    'Union City': (width / 2),
+    Other: (width - (width / 7))
+  };
 
-// row 2 height / 2.1
-  'Cobb County': 240,
-  'East Point': 240,
-  'Johns Creek': 240,
-// row 3 height / 1.5
-  'Sandy Springs': 325,
-  Stonecrest: 325,
-  Tucker: 325,
-// row 4
-  'DeKalb County': 400,
-  'Union City': 400,
-  Other: 400
+  // Y locations of the municipality titles.
+  var munisTitleY = {
+  // row 1 height / 16
+    Alpharetta: 20,
+    Atlanta: 20,
+    Brookhaven: 20,
 
-};
+  // row 2 height / 2.1
+    'Cobb County': 240,
+    'East Point': 240,
+    'Johns Creek': 240,
+  // row 3 height / 1.5
+    'Sandy Springs': 325,
+    Stonecrest: 325,
+    Tucker: 325,
+  // row 4
+    'DeKalb County': 400,
+    'Union City': 400,
+    Other: 400
+
+  };
 
 
   // @v4 strength to apply to the position forces
@@ -138,7 +131,6 @@ var munisTitleY = {
   var fillColor = d3.scaleOrdinal()
     .domain(['low', 'medium', 'high'])
     .range(['#ED8451', '#CC3301', '#7A1E00']);
-
 
   /*
    * This data manipulation function takes the raw data from
@@ -270,7 +262,6 @@ var munisTitleY = {
    * These x and y values are modified by the force simulation.
    */
   function ticked() {
-
     bubbles
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
@@ -287,7 +278,6 @@ var munisTitleY = {
     function nodeMuniPosY(d) {
        return muniCenters[d.muni].y;
      }
-
 
   /*
    * Sets visualization in "single group mode".
@@ -363,9 +353,6 @@ var munisTitleY = {
     var content = '<span class="name">Property: </span><span class="value">' +
                   d.property +
                   '</span><br/>' +
-                  // '<p class="name">Assessed Value: </span><span class="value">' +
-                  // addCommas(d.assessed_value) +
-                  // '</p>' +
                   '<span class="name">Taxes abated: </span><span class="value">$' +
                   addCommas(d.taxes_abated) +
                   '</span><br/>' +
@@ -379,43 +366,29 @@ var munisTitleY = {
                   d.jurisdiction +
                   '</span>';
 
-    // tooltip.
-    //
-    // tooltip.showTooltip(content, d3.event);
-    // If mouseover happens at a point that is beyond half the screenwidth, push the tooltip a little to the left so that it doesn't go out of view
-    // tooltip.style('left', (x - 60) + 'px')
-    //       .style('top', (y + 20) + 'px')
-
     // Offset for tooltip positioning
     var pushLeft = 140,
         pushTop = 120;
 
-    // if it's mobile screen, be more careful about how you place the tooltip on the screen
-    // if(isMobile) {
-      if (x > window.innerWidth / 2) {
-        tooltip.style('left', (x - pushLeft) + 'px')
-      } else {
-        tooltip.style('left', x + 'px')
-      }
+    // if mouseover is beyond the half screen point, push the tooltip to a left
+    if (x > window.innerWidth / 2) {
+      tooltip.style('left', (x - pushLeft) + 'px')
+    } else {
+      tooltip.style('left', x + 'px')
+    }
 
-      if (y > height / 2) {
-        tooltip.style('top', (y - pushTop) + 'px')
-      } else {
-          tooltip
-            .style('top', (y + 15) + 'px')
-      }
-    // }
+    // Same for the height. If it's beyond the halfway point, push tooltip to the top
+    if (y > height / 2) {
+      tooltip.style('top', (y - pushTop) + 'px')
+    } else {
+      tooltip
+        .style('top', (y + 15) + 'px')
+    }
 
-    // else { // If not mobile screen
-    //   tooltip
-    //     .style('left', x + 'px')
-    //     .style('top', (y + 5) + 'px')
-    // }
-
-    // Add the top coordinates, show it and add the HTML content
+  // Add the top coordinates, show it and add the HTML content
     tooltip
-        .classed('show', true)
-        .html(content);
+      .classed('show', true)
+      .html(content);
   }
 
   /*
@@ -445,7 +418,9 @@ var munisTitleY = {
      }
    };
 
+  // Send height so Pym can draw on callback
   pymChild.sendHeight();
+  
   // return the chart function from closure.
   return chart;
 }
@@ -462,35 +437,8 @@ var myBubbleChart = bubbleChart();
  * Calls bubble chart function to display inside #vis div.
  */
 function display(error, data) {
-  if (error) {
-    console.log(error);
-  }
-
+  if error throw error;
   myBubbleChart('#vis', data);
-}
-
-/*
- * Sets up the layout buttons to allow for toggling between view modes.
- */
-function setupButtons() {
-  d3.select('#toolbar')
-    .selectAll('.button')
-    .on('click', function () {
-      // Remove active class from all buttons
-      d3.selectAll('.button').classed('active', false);
-      // Find the button just clicked
-      var button = d3.select(this);
-
-      // Set it as the active button
-      button.classed('active', true);
-
-      // Get the id of the button
-      var buttonId = button.attr('id');
-
-      // Toggle the bubble chart based on
-      // the currently clicked button.
-      myBubbleChart.toggleDisplay(buttonId);
-    });
 }
 
 /*
@@ -498,9 +446,10 @@ function setupButtons() {
  * and add commas to it to improve presentation.
  */
 function addCommas(nStr) {
+  // If it's >= $1 million, show it in words
   if (parseFloat(nStr) > 999999) {
     return (parseFloat(nStr) / 1000000).toFixed(1) + ' million'
-  } else {
+  } else { // Else add the thousand separator commas
       nStr += '';
       var x = nStr.split('.');
       var x1 = x[0];
@@ -516,5 +465,14 @@ function addCommas(nStr) {
 // Load the data.
 d3.csv('data/taxes.csv', display);
 
-// setup the buttons.
-setupButtons();
+// Event handlers for buttons
+buttons.on('click', function() {
+  buttons.classed('active', false);
+
+  var currentButton = d3.select(this);
+  currentButton.classed('active', true)
+
+  // Get the id of the button
+  var buttonId = currentButton.attr('id');
+  myBubbleChart.toggleDisplay(buttonId);
+});
