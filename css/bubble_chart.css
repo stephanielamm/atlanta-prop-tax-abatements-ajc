@@ -60,8 +60,8 @@ a, a:visited, a:active {
 	font-size: 13px;
 }
 
-.tooltip .name {
-  /*font-weight: bold;*/
+.infotip .name {
+  font-weight: bold;
 }
 
 .name {
@@ -113,10 +113,11 @@ a, a:visited, a:active {
     opacity: 0;
     background-color: rgba(255,255,255, 0.9);
     font-size: 13px;
-    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid #000;
     width: 60px;
-    padding: 5px;
-    width: 200px;
+    padding: 3px;
+    width: 160px;
   }
 
 .show {

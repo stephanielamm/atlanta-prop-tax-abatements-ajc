@@ -358,22 +358,22 @@ var munisTitleY = {
     // change outline to indicate hover state.
     // d3.select(this).attr('stroke', 'black');
 
-    var content = '<p class="name">Property: </span><span class="value">' +
+    var content = '<span class="name">Property: </span><span class="value">' +
                   d.property +
-                  '</p>' +
+                  '</span><br/>' +
                   // '<p class="name">Assessed Value: </span><span class="value">' +
                   // addCommas(d.assessed_value) +
                   // '</p>' +
-                  '<p class="name">Taxes Abated: </span><span class="value">$' +
+                  '<span class="name">Taxes Abated: </span><span class="value">$' +
                   addCommas(d.taxes_abated) +
-                  '</p>' +
-                  '<p class="name">Taxes Due: </span><span class="value">$' +
+                  '</span><br/>' +
+                  '<span class="name">Taxes Due: </span><span class="value">$' +
                   addCommas(d.taxes_owed) +
-                  '</p>' +
-                  '<p class="name">Percent Abated: </span><span class="value">' +
+                  '</span><br/>' +
+                  '<span class="name">Percent Abated: </span><span class="value">' +
                   d.percent_abated + '%' +
-                  '</p>' +
-                  '<p class="name">Municipality: </span><span class="value">' +
+                  '</span><br/>' +
+                  '<span class="name">Municipality: </span><span class="value">' +
                   d.jurisdiction +
                   '</span>';
 
