@@ -34,18 +34,18 @@ var muniCenters = {
   Brookhaven: { x: (width - (width / 7) - 50), y: 110 },
 
   // row 2
-  'Cobb County': { x: (width / 10 + 48), y: 265 },
+  'Cobb County': { x: (width / 10 + 48), y: 260 },
   'East Point': { x: (width / 2), y: 210 },
-  'Johns Creek': { x: (width - (width / 7) - 45), y: 280 },
+  'Johns Creek': { x: (width - (width / 7) - 45), y: 265 },
 
   // row 3
-  'Sandy Springs': { x: (width / 10 + 40), y: 360 },
+  'Sandy Springs': { x: (width / 10 + 40), y: 330 },
   Stonecrest: { x: (width / 2), y: 315 },
-  Tucker: { x: (width - (width / 7) - 35), y: 360 },
+  Tucker: { x: (width - (width / 7) - 35), y: 325 },
   // row 4
-  'DeKalb County': { x: (width / 10 + 30), y: 410 },
+  'DeKalb County': { x: (width / 10 + 30), y: 400 },
   'Union City': { x: (width / 2), y: 400 },
-  Other: { x: (width - (width / 7) - 30), y: 425 }
+  Other: { x: (width - (width / 7) - 30), y: 415 }
 
 };
 
