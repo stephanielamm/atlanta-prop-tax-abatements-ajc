@@ -402,7 +402,7 @@ var munisTitleY = {
         tooltip.style('top', (y - pushTop) + 'px')
       } else {
           tooltip
-            .style('top', (y + 5) + 'px')
+            .style('top', (y + 15) + 'px')
       }
     // }
 
