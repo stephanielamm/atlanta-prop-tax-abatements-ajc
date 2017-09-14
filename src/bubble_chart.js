@@ -158,7 +158,7 @@ var munisTitleY = {
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
-      .exponent(0.5)
+      .exponent(0.6)
       .range([5, 30])
       .domain([0, maxAmount]);
 
@@ -361,14 +361,14 @@ var munisTitleY = {
     var content = '<p class="name">Property: </span><span class="value">' +
                   d.property +
                   '</p>' +
-                  '<p class="name">Assessed Value: </span><span class="value">' +
-                  addCommas(d.assessed_value) +
-                  '</p>' +
-                  '<p class="name">Taxes Owed: </span><span class="value">' +
-                  addCommas(d.taxes_owed) +
-                  '</p>' +
-                  '<p class="name">Taxes Abated: </span><span class="value">' +
+                  // '<p class="name">Assessed Value: </span><span class="value">' +
+                  // addCommas(d.assessed_value) +
+                  // '</p>' +
+                  '<p class="name">Taxes Abated: </span><span class="value">$' +
                   addCommas(d.taxes_abated) +
+                  '</p>' +
+                  '<p class="name">Taxes Due: </span><span class="value">$' +
+                  addCommas(d.taxes_owed) +
                   '</p>' +
                   '<p class="name">Percent Abated: </span><span class="value">' +
                   d.percent_abated + '%' +
@@ -487,7 +487,7 @@ function setupButtons() {
  */
 function addCommas(nStr) {
   if (parseFloat(nStr) > 999999) {
-    return '$' + (parseFloat(nStr) / 1000000).toFixed(1) + ' million'
+    return (parseFloat(nStr) / 1000000).toFixed(1) + ' million'
   } else {
       nStr += '';
       var x = nStr.split('.');
